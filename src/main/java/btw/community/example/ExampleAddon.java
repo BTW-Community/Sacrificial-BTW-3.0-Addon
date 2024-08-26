@@ -23,9 +23,7 @@ public class ExampleAddon extends BTWAddon {
 
     private SacrificialItem sacrificialItem;
 
-    public ExampleAddon() {
-        super();
-    }
+    public ExampleAddon() { super(); }
 
     @Override
     public void initialize() {
@@ -36,6 +34,8 @@ public class ExampleAddon extends BTWAddon {
         var sacrificialKnife = new SacrificialKnife(sacrificialKnifeId, EnumToolMaterial.SOULFORGED_STEEL);
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialItem, 1), new Object[] {BTWBlocks.looseCobblestone, Block.dragonEgg});
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialKnife, 1), new Object[] {BTWItems.sharpStone, BTWItems.soulUrn});
+
+        NewVillagerTrades.AddVilagerTrades();
     }
 
     @Override
@@ -47,10 +47,13 @@ public class ExampleAddon extends BTWAddon {
         if (biome.biomeName.equals("Ocean"))
             return;
 
-        if (!world.doChunksNearChunkExist(x, 0, y, 0))
+        if (!world.doChunksNearChunkExist(x, 0, y, 2))
             return;
 
-        if (rand.nextInt(400) == 1)
+        world.setBlock(x, 100, y, 4, 0, 2);
+        world.setBlock(x+1, 100, y, 197, 1, 2);
+
+        if (rand.nextInt(600) == 1)
             spawnShrine(world, x, y);
 
         if (rand.nextInt(800) == 1)
@@ -76,6 +79,9 @@ public class ExampleAddon extends BTWAddon {
 
         if (rand.nextInt(800) == 1)
             spawnHouse1(world, x, y, rand);
+
+        if (rand.nextInt(50) == 1)
+            spawnChurch(world, x, y, rand);
     }
 
     private void spawnPillar(World world, int x1, int z1)
@@ -373,18 +379,7 @@ public class ExampleAddon extends BTWAddon {
         if (chest == null)
             return;
 
-        var loot = new ItemStack(BTWItems.diamondIngot, 4);
-
-        var randomLoot = rand.nextInt(1, 3);
-
-        if (randomLoot == 1)
-            loot = new ItemStack(BTWItems.ironNugget, 3);
-        if (randomLoot == 2)
-            loot = new ItemStack(Item.silk);
-        if (randomLoot == 3)
-            loot = new ItemStack(Item.bone, 3);
-
-        chest.setStorageStack(loot);
+        chest.setStorageStack(getLoot(0, rand));
     }
 
     private void spawnRuins2(World world, int x1, int z1, Random rand)
@@ -487,23 +482,12 @@ public class ExampleAddon extends BTWAddon {
         if (chest == null)
             return;
 
-        var loot = new ItemStack(BTWItems.diamondIngot, 4);
-
-        var randomLoot = rand.nextInt(1, 3);
-
-        if (randomLoot == 1)
-            loot = new ItemStack(BTWItems.ironNugget, 3);
-        if (randomLoot == 2)
-            loot = new ItemStack(Item.silk);
-        if (randomLoot == 3)
-            loot = new ItemStack(Item.bone, 3);
-
-        chest.setStorageStack(loot);
+        chest.setStorageStack(getLoot(1, rand));
     }
 
     private void spawnCastle(World world, int x1, int z1, Random rand)
     {
-        var height = world.getChunkHeightMapMinimum(x1, z1) + 1;
+        var height = world.getChunkHeightMapMinimum(x1, z1);
 
         world.setBlock(x1+3, height+0, z1+1, 4);
         world.setBlock(x1+1, height+0, z1+1, 4);
@@ -651,22 +635,7 @@ public class ExampleAddon extends BTWAddon {
         if (chest == null)
             return;
 
-        var loot = new ItemStack(BTWItems.diamondIngot, 5);
-
-        var randomLoot = rand.nextInt(1, 4);
-
-        if (randomLoot == 1)
-            loot = new ItemStack(BTWItems.ironNugget, 3);
-        if (randomLoot == 2)
-            loot = new ItemStack(Item.ingotIron, 2);
-        if (randomLoot == 3)
-            loot = new ItemStack(Item.bone, 1);
-        if (randomLoot == 4)
-            loot = new ItemStack(Item.ingotGold, 4);
-        if (randomLoot == 5)
-            loot = new ItemStack(Item.swordIron, 1);
-
-        chest.setStorageStack(loot);
+        chest.setStorageStack(getLoot(2, rand));
 
         world.setBlock(x1+1, height+4, z1+2, 4);
         world.setBlock(x1+2, height+4, z1+2, 4);
@@ -1839,8 +1808,7 @@ public class ExampleAddon extends BTWAddon {
         if (chest == null)
             return;
 
-        var loot = new ItemStack(BTWItems.soulforgedSteelIngot, 1);
-        chest.setStorageStack(loot);
+        chest.setStorageStack(getLoot(3, rand));
 
         world.setBlock(x1+5, height+16, z1+5, 52);
         var spawner4 = (TileEntityMobSpawner)world.getBlockTileEntity(x1+5, height+16, z1+5);
@@ -1956,17 +1924,7 @@ public class ExampleAddon extends BTWAddon {
         if (chest == null)
             return;
 
-        var loot = new ItemStack(BTWItems.diamondIngot, 4);
-
-        var randomLoot = rand.nextInt(1, 3);
-
-        if (randomLoot == 2)
-            loot = new ItemStack(Item.appleGold);
-        if (randomLoot == 1)
-            loot = new ItemStack(Item.beefCooked, 6);
-        
-        chest.setStorageStack(loot);
-
+        chest.setStorageStack(getLoot(2, rand));
 
         world.setBlock(x1+8, height+-4, z1+4, 0);
         world.setBlock(x1+8, height+-4, z1+5, 0);
@@ -2284,9 +2242,9 @@ public class ExampleAddon extends BTWAddon {
     {
         var height = world.getChunkHeightMapMinimum(x1, z1) + 1;
 
-        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1+40, 0, z1+40, 0))
+        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1+40, 0, z1+40, 2))
             spawnHouse1(world, x1+40, z1+40, rand);
-        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1-40, 0, z1, 0))
+        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1-40, 0, z1, 2))
             spawnHouse2(world, x1-40, z1, rand);
 
         world.setBlock(x1+2, height+0, z1+-1, 159);
@@ -2336,20 +2294,7 @@ public class ExampleAddon extends BTWAddon {
         if (chest == null)
             return;
 
-        var loot = new ItemStack(BTWItems.diamondIngot, 5);
-
-        var randomLoot = rand.nextInt(1, 4);
-
-        if (randomLoot == 1)
-            loot = new ItemStack(BTWItems.ironChisel, 1);
-        if (randomLoot == 2)
-            loot = new ItemStack(Item.ingotIron, 2);
-        if (randomLoot == 3)
-            loot = new ItemStack(BTWItems.porkDinner, 3);
-        if (randomLoot == 4)
-            loot = new ItemStack(Item.bucketMilk, 4);
-
-        chest.setStorageStack(loot);
+        chest.setStorageStack(getLoot(4, rand));
 
         world.setBlock(x1+9, height+0, z1+-6, 5);
         world.setBlock(x1+3, height+0, z1+-6, 5);
@@ -2613,9 +2558,9 @@ public class ExampleAddon extends BTWAddon {
     {
         var height = world.getChunkHeightMapMinimum(x1, z1) + 1;
 
-        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1+40, 0, z1+40, 0))
+        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1+40, 0, z1+40, 2))
             spawnHouse2(world, x1+40, z1+40, rand);
-        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1-40, 0, z1, 0))
+        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1-40, 0, z1, 2))
             spawnHouse1(world, x1-40, z1, rand);
 
         world.setBlock(x1+2, height+0, z1+-1, 159);
@@ -2668,21 +2613,7 @@ public class ExampleAddon extends BTWAddon {
         if (chest == null)
             return;
 
-        var loot = new ItemStack(BTWItems.diamondIngot, 5);
-
-        var randomLoot = rand.nextInt(1, 4);
-
-        if (randomLoot == 1)
-            loot = new ItemStack(BTWItems.ironChisel, 1);
-        if (randomLoot == 2)
-            loot = new ItemStack(Item.ingotIron, 2);
-        if (randomLoot == 3)
-            loot = new ItemStack(BTWItems.porkDinner, 3);
-        if (randomLoot == 4)
-            loot = new ItemStack(Item.bucketMilk, 4);
-
-        chest.setStorageStack(loot);
-
+        chest.setStorageStack(getLoot(4, rand));
 
         world.setBlock(x1+9, height+0, z1+-6, 5);
         world.setBlock(x1+3, height+0, z1+-6, 5);
@@ -3268,5 +3199,709 @@ public class ExampleAddon extends BTWAddon {
         world.setBlock(x1+10, height+3, z1+-6, 159);
         world.setBlock(x1+10, height+3, z1+-7, 159);
 
+    }
+
+    private void spawnChurch(World world, int x1, int z1, Random rand)
+    {
+        var height = world.getChunkHeightMapMinimum(x1, z1) + 1;
+
+        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1+40, 0, z1+40, 2))
+            spawnHouse2(world, x1+40, z1+40, rand);
+        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1-40, 0, z1, 2))
+            spawnHouse1(world, x1-40, z1, rand);
+
+
+        var villager = new EntityVillager(world, 0);
+        villager.setLocationAndAngles(x1+5, height+1, z1+-3, 0, 0);
+        villager.setTradeLevel(4);
+        world.spawnEntityInWorld(villager);
+
+        world.setBlock(x1+0, height+0, z1+0, 5);
+        world.setBlock(x1+1, height+0, z1+0, 5);
+        world.setBlock(x1+2, height+0, z1+0, 5);
+        world.setBlock(x1+3, height+0, z1+0, 5);
+        world.setBlock(x1+4, height+0, z1+0, 5);
+        world.setBlock(x1+5, height+0, z1+0, 5);
+        world.setBlock(x1+6, height+0, z1+0, 5);
+        world.setBlock(x1+7, height+0, z1+0, 5);
+        world.setBlock(x1+8, height+0, z1+0, 5);
+        world.setBlock(x1+0, height+0, z1+-1, 5);
+        world.setBlock(x1+1, height+0, z1+-1, 5);
+        world.setBlock(x1+2, height+0, z1+-1, 5);
+        world.setBlock(x1+3, height+0, z1+-1, 5);
+        world.setBlock(x1+4, height+0, z1+-1, 5);
+        world.setBlock(x1+5, height+0, z1+-1, 5);
+        world.setBlock(x1+6, height+0, z1+-1, 5);
+        world.setBlock(x1+7, height+0, z1+-1, 5);
+        world.setBlock(x1+7, height+1, z1+-1, 5);
+        world.setBlock(x1+7, height+1, z1+-1, 98);
+        world.setBlock(x1+7, height+2, z1+-1, 98);
+        world.setBlock(x1+7, height+3, z1+-1, 98);
+        world.setBlock(x1+7, height+4, z1+-1, 98);
+        world.setBlock(x1+7, height+5, z1+-1, 98);
+        world.setBlock(x1+7, height+6, z1+-1, 98);
+        world.setBlock(x1+7, height+7, z1+-1, 98);
+        world.setBlock(x1+1, height+1, z1+-1, 98);
+        world.setBlock(x1+1, height+2, z1+-1, 98);
+        world.setBlock(x1+1, height+3, z1+-1, 98);
+        world.setBlock(x1+1, height+4, z1+-1, 98);
+        world.setBlock(x1+1, height+5, z1+-1, 98);
+        world.setBlock(x1+1, height+6, z1+-1, 98);
+        world.setBlock(x1+1, height+7, z1+-1, 98);
+        world.setBlock(x1+1, height+1, z1+-7, 98);
+        world.setBlock(x1+1, height+2, z1+-7, 98);
+        world.setBlock(x1+1, height+3, z1+-7, 98);
+        world.setBlock(x1+1, height+4, z1+-7, 98);
+        world.setBlock(x1+1, height+5, z1+-7, 98);
+        world.setBlock(x1+1, height+6, z1+-7, 98);
+        world.setBlock(x1+1, height+7, z1+-7, 98);
+        world.setBlock(x1+7, height+1, z1+-7, 98);
+        world.setBlock(x1+7, height+2, z1+-7, 98);
+        world.setBlock(x1+7, height+1, z1+-6, 4);
+        world.setBlock(x1+7, height+1, z1+-5, 4);
+        world.setBlock(x1+7, height+1, z1+-4, 4);
+        world.setBlock(x1+7, height+1, z1+-3, 4);
+        world.setBlock(x1+7, height+1, z1+-2, 4);
+        world.setBlock(x1+7, height+2, z1+-6, 4);
+        world.setBlock(x1+7, height+2, z1+-5, 4);
+        world.setBlock(x1+7, height+2, z1+-4, 4);
+        world.setBlock(x1+7, height+2, z1+-3, 4);
+        world.setBlock(x1+7, height+2, z1+-2, 4);
+        world.setBlock(x1+7, height+3, z1+-6, 4);
+        world.setBlock(x1+7, height+3, z1+-5, 4);
+        world.setBlock(x1+7, height+3, z1+-4, 4);
+        world.setBlock(x1+7, height+3, z1+-3, 4);
+        world.setBlock(x1+7, height+3, z1+-2, 4);
+        world.setBlock(x1+7, height+4, z1+-6, 4);
+        world.setBlock(x1+7, height+4, z1+-5, 4);
+        world.setBlock(x1+7, height+4, z1+-4, 4);
+        world.setBlock(x1+7, height+4, z1+-3, 4);
+        world.setBlock(x1+7, height+4, z1+-2, 4);
+        world.setBlock(x1+7, height+5, z1+-6, 4);
+        world.setBlock(x1+7, height+5, z1+-5, 4);
+        world.setBlock(x1+7, height+5, z1+-4, 4);
+        world.setBlock(x1+7, height+5, z1+-3, 4);
+        world.setBlock(x1+7, height+5, z1+-2, 4);
+        world.setBlock(x1+7, height+6, z1+-6, 4);
+        world.setBlock(x1+7, height+6, z1+-5, 4);
+        world.setBlock(x1+7, height+6, z1+-4, 4);
+        world.setBlock(x1+7, height+6, z1+-3, 4);
+        world.setBlock(x1+7, height+6, z1+-2, 4);
+        world.setBlock(x1+7, height+7, z1+-6, 4);
+        world.setBlock(x1+7, height+7, z1+-5, 4);
+        world.setBlock(x1+7, height+7, z1+-4, 4);
+        world.setBlock(x1+7, height+7, z1+-3, 4);
+        world.setBlock(x1+7, height+7, z1+-2, 4);
+        world.setBlock(x1+1, height+1, z1+-6, 4);
+        world.setBlock(x1+1, height+1, z1+-5, 4);
+        world.setBlock(x1+1, height+1, z1+-4, 4);
+        world.setBlock(x1+1, height+1, z1+-3, 4);
+        world.setBlock(x1+1, height+1, z1+-2, 4);
+        world.setBlock(x1+1, height+2, z1+-6, 4);
+        world.setBlock(x1+1, height+2, z1+-5, 4);
+        world.setBlock(x1+1, height+2, z1+-4, 4);
+        world.setBlock(x1+1, height+2, z1+-3, 4);
+        world.setBlock(x1+1, height+2, z1+-2, 4);
+        world.setBlock(x1+1, height+3, z1+-6, 4);
+        world.setBlock(x1+1, height+3, z1+-5, 4);
+        world.setBlock(x1+1, height+3, z1+-4, 4);
+        world.setBlock(x1+1, height+3, z1+-3, 4);
+        world.setBlock(x1+1, height+3, z1+-2, 4);
+        world.setBlock(x1+1, height+4, z1+-6, 4);
+        world.setBlock(x1+1, height+4, z1+-5, 4);
+        world.setBlock(x1+1, height+4, z1+-4, 4);
+        world.setBlock(x1+1, height+4, z1+-3, 4);
+        world.setBlock(x1+1, height+4, z1+-2, 4);
+        world.setBlock(x1+1, height+5, z1+-6, 4);
+        world.setBlock(x1+1, height+5, z1+-5, 4);
+        world.setBlock(x1+1, height+5, z1+-4, 4);
+        world.setBlock(x1+1, height+5, z1+-3, 4);
+        world.setBlock(x1+1, height+5, z1+-2, 4);
+        world.setBlock(x1+1, height+6, z1+-6, 4);
+        world.setBlock(x1+1, height+6, z1+-5, 4);
+        world.setBlock(x1+1, height+6, z1+-4, 4);
+        world.setBlock(x1+1, height+6, z1+-3, 4);
+        world.setBlock(x1+1, height+6, z1+-2, 4);
+        world.setBlock(x1+1, height+7, z1+-6, 4);
+        world.setBlock(x1+1, height+7, z1+-5, 4);
+        world.setBlock(x1+1, height+7, z1+-4, 4);
+        world.setBlock(x1+1, height+7, z1+-3, 4);
+        world.setBlock(x1+1, height+7, z1+-2, 4);
+        world.setBlock(x1+2, height+1, z1+-7, 4);
+        world.setBlock(x1+3, height+1, z1+-7, 4);
+        world.setBlock(x1+4, height+1, z1+-7, 4);
+        world.setBlock(x1+5, height+1, z1+-7, 4);
+        world.setBlock(x1+6, height+1, z1+-7, 4);
+        world.setBlock(x1+2, height+2, z1+-7, 4);
+        world.setBlock(x1+3, height+2, z1+-7, 4);
+        world.setBlock(x1+4, height+2, z1+-7, 4);
+        world.setBlock(x1+5, height+2, z1+-7, 4);
+        world.setBlock(x1+6, height+2, z1+-7, 4);
+        world.setBlock(x1+2, height+3, z1+-7, 4);
+        world.setBlock(x1+3, height+3, z1+-7, 4);
+        world.setBlock(x1+4, height+3, z1+-7, 4);
+        world.setBlock(x1+5, height+3, z1+-7, 4);
+        world.setBlock(x1+6, height+3, z1+-7, 4);
+        world.setBlock(x1+2, height+4, z1+-7, 4);
+        world.setBlock(x1+3, height+4, z1+-7, 4);
+        world.setBlock(x1+4, height+4, z1+-7, 4);
+        world.setBlock(x1+5, height+4, z1+-7, 4);
+        world.setBlock(x1+6, height+4, z1+-7, 4);
+        world.setBlock(x1+2, height+5, z1+-7, 4);
+        world.setBlock(x1+3, height+5, z1+-7, 4);
+        world.setBlock(x1+4, height+5, z1+-7, 4);
+        world.setBlock(x1+5, height+5, z1+-7, 4);
+        world.setBlock(x1+6, height+5, z1+-7, 4);
+        world.setBlock(x1+2, height+6, z1+-7, 4);
+        world.setBlock(x1+3, height+6, z1+-7, 4);
+        world.setBlock(x1+4, height+6, z1+-7, 4);
+        world.setBlock(x1+5, height+6, z1+-7, 4);
+        world.setBlock(x1+6, height+6, z1+-7, 4);
+        world.setBlock(x1+2, height+7, z1+-7, 4);
+        world.setBlock(x1+3, height+7, z1+-7, 4);
+        world.setBlock(x1+4, height+7, z1+-7, 4);
+        world.setBlock(x1+5, height+7, z1+-7, 4);
+        world.setBlock(x1+6, height+7, z1+-7, 4);
+        world.setBlock(x1+2, height+1, z1+-1, 4);
+        world.setBlock(x1+3, height+1, z1+-1, 4);
+        world.setBlock(x1+4, height+1, z1+-1, 3);
+        world.setBlock(x1+5, height+1, z1+-1, 4);
+        world.setBlock(x1+6, height+1, z1+-1, 4);
+        world.setBlock(x1+2, height+2, z1+-1, 4);
+        world.setBlock(x1+3, height+2, z1+-1, 4);
+        world.setBlock(x1+5, height+2, z1+-1, 4);
+        world.setBlock(x1+6, height+2, z1+-1, 4);
+        world.setBlock(x1+2, height+3, z1+-1, 4);
+        world.setBlock(x1+3, height+3, z1+-1, 4);
+        world.setBlock(x1+4, height+3, z1+-1, 4);
+        world.setBlock(x1+5, height+3, z1+-1, 4);
+        world.setBlock(x1+6, height+3, z1+-1, 4);
+        world.setBlock(x1+2, height+4, z1+-1, 4);
+        world.setBlock(x1+3, height+4, z1+-1, 4);
+        world.setBlock(x1+4, height+4, z1+-1, 4);
+        world.setBlock(x1+5, height+4, z1+-1, 4);
+        world.setBlock(x1+6, height+4, z1+-1, 4);
+        world.setBlock(x1+2, height+5, z1+-1, 4);
+        world.setBlock(x1+3, height+5, z1+-1, 4);
+        world.setBlock(x1+4, height+5, z1+-1, 4);
+        world.setBlock(x1+5, height+5, z1+-1, 4);
+        world.setBlock(x1+6, height+5, z1+-1, 4);
+        world.setBlock(x1+2, height+6, z1+-1, 4);
+        world.setBlock(x1+3, height+6, z1+-1, 4);
+        world.setBlock(x1+4, height+6, z1+-1, 4);
+        world.setBlock(x1+5, height+6, z1+-1, 4);
+        world.setBlock(x1+6, height+6, z1+-1, 4);
+        world.setBlock(x1+2, height+7, z1+-1, 4);
+        world.setBlock(x1+3, height+7, z1+-1, 4);
+        world.setBlock(x1+4, height+7, z1+-1, 4);
+        world.setBlock(x1+5, height+7, z1+-1, 4);
+        world.setBlock(x1+6, height+7, z1+-1, 4);
+        world.setBlock(x1+6, height+8, z1+-2, 4);
+        world.setBlock(x1+6, height+8, z1+-3, 4);
+        world.setBlock(x1+6, height+8, z1+-4, 4);
+        world.setBlock(x1+6, height+8, z1+-5, 4);
+        world.setBlock(x1+6, height+8, z1+-6, 4);
+        world.setBlock(x1+5, height+8, z1+-6, 4);
+        world.setBlock(x1+4, height+8, z1+-6, 4);
+        world.setBlock(x1+3, height+8, z1+-6, 4);
+        world.setBlock(x1+2, height+8, z1+-6, 4);
+        world.setBlock(x1+2, height+8, z1+-5, 4);
+        world.setBlock(x1+2, height+8, z1+-4, 4);
+        world.setBlock(x1+2, height+8, z1+-3, 4);
+        world.setBlock(x1+2, height+8, z1+-2, 4);
+        world.setBlock(x1+3, height+8, z1+-2, 4);
+        world.setBlock(x1+4, height+8, z1+-2, 4);
+        world.setBlock(x1+5, height+8, z1+-2, 4);
+        world.setBlock(x1+6, height+9, z1+-2, 4);
+        world.setBlock(x1+6, height+9, z1+-3, 4);
+        world.setBlock(x1+6, height+9, z1+-4, 4);
+        world.setBlock(x1+6, height+9, z1+-5, 4);
+        world.setBlock(x1+6, height+9, z1+-6, 4);
+        world.setBlock(x1+5, height+9, z1+-6, 4);
+        world.setBlock(x1+4, height+9, z1+-6, 4);
+        world.setBlock(x1+3, height+9, z1+-6, 4);
+        world.setBlock(x1+2, height+9, z1+-6, 4);
+        world.setBlock(x1+2, height+9, z1+-5, 4);
+        world.setBlock(x1+2, height+9, z1+-4, 4);
+        world.setBlock(x1+2, height+9, z1+-3, 4);
+        world.setBlock(x1+2, height+9, z1+-2, 4);
+        world.setBlock(x1+3, height+9, z1+-2, 4);
+        world.setBlock(x1+4, height+9, z1+-2, 4);
+        world.setBlock(x1+5, height+9, z1+-2, 4);
+        world.setBlock(x1+6, height+10, z1+-2, 4);
+        world.setBlock(x1+6, height+10, z1+-3, 4);
+        world.setBlock(x1+6, height+10, z1+-4, 4);
+        world.setBlock(x1+6, height+10, z1+-5, 4);
+        world.setBlock(x1+6, height+10, z1+-6, 4);
+        world.setBlock(x1+5, height+10, z1+-6, 4);
+        world.setBlock(x1+4, height+10, z1+-6, 4);
+        world.setBlock(x1+3, height+10, z1+-6, 4);
+        world.setBlock(x1+2, height+10, z1+-6, 4);
+        world.setBlock(x1+2, height+10, z1+-5, 4);
+        world.setBlock(x1+2, height+10, z1+-4, 4);
+        world.setBlock(x1+2, height+10, z1+-3, 4);
+        world.setBlock(x1+2, height+10, z1+-2, 4);
+        world.setBlock(x1+3, height+10, z1+-2, 4);
+        world.setBlock(x1+4, height+10, z1+-2, 4);
+        world.setBlock(x1+5, height+10, z1+-2, 4);
+        world.setBlock(x1+6, height+11, z1+-2, 4);
+        world.setBlock(x1+6, height+11, z1+-3, 4);
+        world.setBlock(x1+6, height+11, z1+-4, 89);
+        world.setBlock(x1+6, height+11, z1+-5, 4);
+        world.setBlock(x1+6, height+11, z1+-6, 4);
+        world.setBlock(x1+5, height+11, z1+-6, 4);
+        world.setBlock(x1+4, height+11, z1+-6, 89);
+        world.setBlock(x1+3, height+11, z1+-6, 4);
+        world.setBlock(x1+2, height+11, z1+-6, 4);
+        world.setBlock(x1+2, height+11, z1+-5, 4);
+        world.setBlock(x1+2, height+11, z1+-4, 89);
+        world.setBlock(x1+2, height+11, z1+-3, 4);
+        world.setBlock(x1+2, height+11, z1+-2, 4);
+        world.setBlock(x1+3, height+11, z1+-2, 4);
+        world.setBlock(x1+4, height+11, z1+-2, 89);
+        world.setBlock(x1+5, height+11, z1+-2, 4);
+        world.setBlock(x1+6, height+12, z1+-2, 4);
+        world.setBlock(x1+6, height+12, z1+-3, 4);
+        world.setBlock(x1+6, height+12, z1+-4, 4);
+        world.setBlock(x1+6, height+12, z1+-5, 4);
+        world.setBlock(x1+6, height+12, z1+-6, 4);
+        world.setBlock(x1+5, height+12, z1+-6, 4);
+        world.setBlock(x1+4, height+12, z1+-6, 4);
+        world.setBlock(x1+3, height+12, z1+-6, 4);
+        world.setBlock(x1+2, height+12, z1+-6, 4);
+        world.setBlock(x1+2, height+12, z1+-5, 4);
+        world.setBlock(x1+2, height+12, z1+-4, 4);
+        world.setBlock(x1+2, height+12, z1+-3, 4);
+        world.setBlock(x1+2, height+12, z1+-2, 4);
+        world.setBlock(x1+3, height+12, z1+-2, 4);
+        world.setBlock(x1+4, height+12, z1+-2, 4);
+        world.setBlock(x1+5, height+12, z1+-2, 4);
+        world.setBlock(x1+6, height+13, z1+-2, 4);
+        world.setBlock(x1+6, height+13, z1+-3, 4);
+        world.setBlock(x1+6, height+13, z1+-4, 4);
+        world.setBlock(x1+6, height+13, z1+-5, 4);
+        world.setBlock(x1+6, height+13, z1+-6, 4);
+        world.setBlock(x1+5, height+13, z1+-6, 4);
+        world.setBlock(x1+4, height+13, z1+-6, 4);
+        world.setBlock(x1+3, height+13, z1+-6, 4);
+        world.setBlock(x1+2, height+13, z1+-6, 4);
+        world.setBlock(x1+2, height+13, z1+-5, 4);
+        world.setBlock(x1+2, height+13, z1+-4, 4);
+        world.setBlock(x1+2, height+13, z1+-3, 4);
+        world.setBlock(x1+2, height+13, z1+-2, 4);
+        world.setBlock(x1+3, height+13, z1+-2, 4);
+        world.setBlock(x1+4, height+13, z1+-2, 4);
+        world.setBlock(x1+5, height+13, z1+-2, 4);
+        world.setBlock(x1+6, height+14, z1+-2, 4);
+        world.setBlock(x1+6, height+14, z1+-3, 4);
+        world.setBlock(x1+6, height+14, z1+-4, 4);
+        world.setBlock(x1+6, height+14, z1+-5, 4);
+        world.setBlock(x1+6, height+14, z1+-6, 4);
+        world.setBlock(x1+5, height+14, z1+-6, 4);
+        world.setBlock(x1+4, height+14, z1+-6, 4);
+        world.setBlock(x1+3, height+14, z1+-6, 4);
+        world.setBlock(x1+2, height+14, z1+-6, 4);
+        world.setBlock(x1+2, height+14, z1+-5, 4);
+        world.setBlock(x1+2, height+14, z1+-4, 4);
+        world.setBlock(x1+2, height+14, z1+-3, 4);
+        world.setBlock(x1+2, height+14, z1+-2, 4);
+        world.setBlock(x1+3, height+14, z1+-2, 4);
+        world.setBlock(x1+4, height+14, z1+-2, 4);
+        world.setBlock(x1+5, height+14, z1+-2, 4);
+        world.setBlock(x1+6, height+15, z1+-2, 4);
+        world.setBlock(x1+6, height+15, z1+-3, 4);
+        world.setBlock(x1+6, height+15, z1+-5, 4);
+        world.setBlock(x1+6, height+15, z1+-6, 4);
+        world.setBlock(x1+5, height+15, z1+-6, 4);
+        world.setBlock(x1+3, height+15, z1+-6, 4);
+        world.setBlock(x1+2, height+15, z1+-6, 4);
+        world.setBlock(x1+2, height+15, z1+-5, 4);
+        world.setBlock(x1+2, height+15, z1+-3, 4);
+        world.setBlock(x1+2, height+15, z1+-2, 4);
+        world.setBlock(x1+3, height+15, z1+-2, 4);
+        world.setBlock(x1+5, height+15, z1+-2, 4);
+        world.setBlock(x1+7, height+3, z1+-7, 98);
+        world.setBlock(x1+7, height+4, z1+-7, 98);
+        world.setBlock(x1+7, height+5, z1+-7, 98);
+        world.setBlock(x1+7, height+6, z1+-7, 98);
+        world.setBlock(x1+7, height+7, z1+-7, 98);
+        world.setBlock(x1+8, height+0, z1+-1, 5);
+        world.setBlock(x1+0, height+0, z1+-2, 5);
+        world.setBlock(x1+1, height+0, z1+-2, 5);
+        world.setBlock(x1+2, height+0, z1+-2, 5);
+        world.setBlock(x1+3, height+0, z1+-2, 5);
+        world.setBlock(x1+4, height+0, z1+-2, 5);
+        world.setBlock(x1+5, height+0, z1+-2, 5);
+        world.setBlock(x1+6, height+0, z1+-2, 5);
+        world.setBlock(x1+7, height+0, z1+-2, 5);
+        world.setBlock(x1+8, height+0, z1+-2, 5);
+        world.setBlock(x1+0, height+0, z1+-3, 5);
+        world.setBlock(x1+1, height+0, z1+-3, 5);
+        world.setBlock(x1+2, height+0, z1+-3, 5);
+        world.setBlock(x1+3, height+0, z1+-3, 5);
+        world.setBlock(x1+4, height+0, z1+-3, 5);
+        world.setBlock(x1+5, height+0, z1+-3, 5);
+        world.setBlock(x1+6, height+0, z1+-3, 5);
+        world.setBlock(x1+7, height+0, z1+-3, 5);
+        world.setBlock(x1+8, height+0, z1+-3, 5);
+        world.setBlock(x1+0, height+0, z1+-4, 5);
+        world.setBlock(x1+1, height+0, z1+-4, 5);
+        world.setBlock(x1+2, height+0, z1+-4, 5);
+        world.setBlock(x1+3, height+0, z1+-4, 5);
+        world.setBlock(x1+4, height+0, z1+-4, 5);
+        world.setBlock(x1+6, height+1, z1+-6, 0);
+        world.setBlock(x1+6, height+1, z1+-5, 0);
+        world.setBlock(x1+6, height+1, z1+-4, 0);
+        world.setBlock(x1+6, height+1, z1+-3, 0);
+        world.setBlock(x1+6, height+1, z1+-2, 0);
+        world.setBlock(x1+5, height+1, z1+-6, 0);
+        world.setBlock(x1+5, height+1, z1+-5, 0);
+        world.setBlock(x1+5, height+1, z1+-4, 0);
+        world.setBlock(x1+5, height+1, z1+-3, 0);
+        world.setBlock(x1+5, height+1, z1+-2, 0);
+        world.setBlock(x1+4, height+1, z1+-6, 0);
+        world.setBlock(x1+4, height+1, z1+-5, 0);
+        world.setBlock(x1+4, height+1, z1+-4, 0);
+        world.setBlock(x1+4, height+1, z1+-3, 0);
+        world.setBlock(x1+4, height+1, z1+-2, 0);
+        world.setBlock(x1+3, height+1, z1+-6, 0);
+        world.setBlock(x1+3, height+1, z1+-5, 0);
+        world.setBlock(x1+3, height+1, z1+-4, 0);
+        world.setBlock(x1+3, height+1, z1+-3, 0);
+        world.setBlock(x1+3, height+1, z1+-2, 0);
+        world.setBlock(x1+2, height+1, z1+-6, 0);
+        world.setBlock(x1+2, height+1, z1+-5, 0);
+        world.setBlock(x1+2, height+1, z1+-4, 0);
+        world.setBlock(x1+2, height+1, z1+-3, 0);
+        world.setBlock(x1+2, height+1, z1+-2, 0);
+        world.setBlock(x1+2, height+2, z1+-6, 0);
+        world.setBlock(x1+2, height+2, z1+-5, 0);
+        world.setBlock(x1+2, height+2, z1+-4, 0);
+        world.setBlock(x1+2, height+2, z1+-3, 0);
+        world.setBlock(x1+2, height+2, z1+-2, 0);
+        world.setBlock(x1+3, height+2, z1+-6, 0);
+        world.setBlock(x1+3, height+2, z1+-5, 0);
+        world.setBlock(x1+3, height+2, z1+-4, 0);
+        world.setBlock(x1+3, height+2, z1+-3, 0);
+        world.setBlock(x1+3, height+2, z1+-2, 0);
+        world.setBlock(x1+4, height+2, z1+-6, 0);
+        world.setBlock(x1+4, height+2, z1+-5, 0);
+        world.setBlock(x1+4, height+2, z1+-4, 0);
+        world.setBlock(x1+4, height+2, z1+-3, 0);
+        world.setBlock(x1+4, height+2, z1+-2, 0);
+        world.setBlock(x1+5, height+2, z1+-6, 0);
+        world.setBlock(x1+5, height+2, z1+-5, 0);
+        world.setBlock(x1+5, height+2, z1+-4, 0);
+        world.setBlock(x1+5, height+2, z1+-3, 0);
+        world.setBlock(x1+5, height+2, z1+-2, 0);
+        world.setBlock(x1+6, height+2, z1+-6, 0);
+        world.setBlock(x1+6, height+2, z1+-5, 0);
+        world.setBlock(x1+6, height+2, z1+-4, 0);
+        world.setBlock(x1+6, height+2, z1+-3, 0);
+        world.setBlock(x1+6, height+2, z1+-2, 0);
+        world.setBlock(x1+6, height+3, z1+-6, 0);
+        world.setBlock(x1+6, height+3, z1+-5, 0);
+        world.setBlock(x1+6, height+3, z1+-4, 0);
+        world.setBlock(x1+6, height+3, z1+-3, 0);
+        world.setBlock(x1+6, height+3, z1+-2, 0);
+        world.setBlock(x1+5, height+3, z1+-6, 0);
+        world.setBlock(x1+5, height+3, z1+-5, 0);
+        world.setBlock(x1+5, height+3, z1+-4, 0);
+        world.setBlock(x1+5, height+3, z1+-3, 0);
+        world.setBlock(x1+5, height+3, z1+-2, 0);
+        world.setBlock(x1+4, height+3, z1+-6, 0);
+        world.setBlock(x1+4, height+3, z1+-5, 0);
+        world.setBlock(x1+4, height+3, z1+-4, 0);
+        world.setBlock(x1+4, height+3, z1+-3, 0);
+        world.setBlock(x1+4, height+3, z1+-2, 0);
+        world.setBlock(x1+3, height+3, z1+-6, 0);
+        world.setBlock(x1+3, height+3, z1+-5, 0);
+        world.setBlock(x1+3, height+3, z1+-4, 0);
+        world.setBlock(x1+3, height+3, z1+-3, 0);
+        world.setBlock(x1+3, height+3, z1+-2, 0);
+        world.setBlock(x1+2, height+3, z1+-6, 0);
+        world.setBlock(x1+2, height+3, z1+-5, 0);
+        world.setBlock(x1+2, height+3, z1+-4, 0);
+        world.setBlock(x1+2, height+3, z1+-3, 0);
+        world.setBlock(x1+2, height+3, z1+-2, 0);
+        world.setBlock(x1+2, height+4, z1+-6, 0);
+        world.setBlock(x1+2, height+4, z1+-5, 0);
+        world.setBlock(x1+2, height+4, z1+-4, 0);
+        world.setBlock(x1+2, height+4, z1+-3, 0);
+        world.setBlock(x1+2, height+4, z1+-2, 0);
+        world.setBlock(x1+3, height+4, z1+-6, 0);
+        world.setBlock(x1+3, height+4, z1+-5, 0);
+        world.setBlock(x1+3, height+4, z1+-4, 0);
+        world.setBlock(x1+3, height+4, z1+-3, 0);
+        world.setBlock(x1+3, height+4, z1+-2, 0);
+        world.setBlock(x1+4, height+4, z1+-6, 0);
+        world.setBlock(x1+4, height+4, z1+-5, 0);
+        world.setBlock(x1+4, height+4, z1+-4, 0);
+        world.setBlock(x1+4, height+4, z1+-3, 0);
+        world.setBlock(x1+4, height+4, z1+-2, 0);
+        world.setBlock(x1+5, height+4, z1+-6, 0);
+        world.setBlock(x1+5, height+4, z1+-5, 0);
+        world.setBlock(x1+5, height+4, z1+-4, 0);
+        world.setBlock(x1+5, height+4, z1+-3, 0);
+        world.setBlock(x1+5, height+4, z1+-2, 0);
+        world.setBlock(x1+6, height+4, z1+-6, 0);
+        world.setBlock(x1+6, height+4, z1+-5, 0);
+        world.setBlock(x1+6, height+4, z1+-4, 0);
+        world.setBlock(x1+6, height+4, z1+-3, 0);
+        world.setBlock(x1+6, height+4, z1+-2, 0);
+        world.setBlock(x1+6, height+5, z1+-6, 0);
+        world.setBlock(x1+6, height+5, z1+-5, 0);
+        world.setBlock(x1+6, height+5, z1+-4, 0);
+        world.setBlock(x1+6, height+5, z1+-3, 0);
+        world.setBlock(x1+6, height+5, z1+-2, 0);
+        world.setBlock(x1+5, height+5, z1+-6, 0);
+        world.setBlock(x1+5, height+5, z1+-5, 0);
+        world.setBlock(x1+5, height+5, z1+-4, 0);
+        world.setBlock(x1+5, height+5, z1+-3, 0);
+        world.setBlock(x1+5, height+5, z1+-2, 0);
+        world.setBlock(x1+4, height+5, z1+-6, 0);
+        world.setBlock(x1+4, height+5, z1+-5, 0);
+        world.setBlock(x1+4, height+5, z1+-4, 0);
+        world.setBlock(x1+4, height+5, z1+-3, 0);
+        world.setBlock(x1+4, height+5, z1+-2, 0);
+        world.setBlock(x1+3, height+5, z1+-6, 0);
+        world.setBlock(x1+3, height+5, z1+-5, 0);
+        world.setBlock(x1+3, height+5, z1+-4, 0);
+        world.setBlock(x1+3, height+5, z1+-3, 0);
+        world.setBlock(x1+3, height+5, z1+-2, 0);
+        world.setBlock(x1+2, height+5, z1+-6, 0);
+        world.setBlock(x1+2, height+5, z1+-5, 0);
+        world.setBlock(x1+2, height+5, z1+-4, 0);
+        world.setBlock(x1+2, height+5, z1+-3, 0);
+        world.setBlock(x1+2, height+5, z1+-2, 0);
+        world.setBlock(x1+2, height+6, z1+-6, 0);
+        world.setBlock(x1+2, height+6, z1+-5, 0);
+        world.setBlock(x1+2, height+6, z1+-4, 0);
+        world.setBlock(x1+2, height+6, z1+-3, 0);
+        world.setBlock(x1+2, height+6, z1+-2, 0);
+        world.setBlock(x1+3, height+6, z1+-6, 0);
+        world.setBlock(x1+3, height+6, z1+-5, 0);
+        world.setBlock(x1+3, height+6, z1+-4, 0);
+        world.setBlock(x1+3, height+6, z1+-3, 0);
+        world.setBlock(x1+3, height+6, z1+-2, 0);
+        world.setBlock(x1+4, height+6, z1+-6, 0);
+        world.setBlock(x1+4, height+6, z1+-5, 0);
+        world.setBlock(x1+4, height+6, z1+-4, 0);
+        world.setBlock(x1+4, height+6, z1+-3, 0);
+        world.setBlock(x1+4, height+6, z1+-2, 0);
+        world.setBlock(x1+5, height+6, z1+-6, 0);
+        world.setBlock(x1+5, height+6, z1+-5, 0);
+        world.setBlock(x1+5, height+6, z1+-4, 0);
+        world.setBlock(x1+5, height+6, z1+-3, 0);
+        world.setBlock(x1+5, height+6, z1+-2, 0);
+        world.setBlock(x1+6, height+6, z1+-6, 0);
+        world.setBlock(x1+6, height+6, z1+-5, 0);
+        world.setBlock(x1+6, height+6, z1+-4, 0);
+        world.setBlock(x1+6, height+6, z1+-3, 0);
+        world.setBlock(x1+6, height+6, z1+-2, 0);
+        world.setBlock(x1+6, height+7, z1+-6, 0);
+        world.setBlock(x1+6, height+7, z1+-5, 0);
+        world.setBlock(x1+6, height+7, z1+-4, 0);
+        world.setBlock(x1+6, height+7, z1+-3, 0);
+        world.setBlock(x1+6, height+7, z1+-2, 0);
+        world.setBlock(x1+5, height+7, z1+-6, 0);
+        world.setBlock(x1+5, height+7, z1+-5, 0);
+        world.setBlock(x1+5, height+7, z1+-4, 0);
+        world.setBlock(x1+5, height+7, z1+-3, 0);
+        world.setBlock(x1+5, height+7, z1+-2, 0);
+        world.setBlock(x1+4, height+7, z1+-6, 0);
+        world.setBlock(x1+4, height+7, z1+-5, 0);
+        world.setBlock(x1+4, height+7, z1+-4, 0);
+        world.setBlock(x1+4, height+7, z1+-3, 0);
+        world.setBlock(x1+4, height+7, z1+-2, 0);
+        world.setBlock(x1+3, height+7, z1+-6, 0);
+        world.setBlock(x1+3, height+7, z1+-5, 0);
+        world.setBlock(x1+3, height+7, z1+-4, 0);
+        world.setBlock(x1+3, height+7, z1+-3, 0);
+        world.setBlock(x1+3, height+7, z1+-2, 0);
+        world.setBlock(x1+2, height+7, z1+-6, 0);
+        world.setBlock(x1+2, height+7, z1+-5, 0);
+        world.setBlock(x1+2, height+7, z1+-4, 0);
+        world.setBlock(x1+2, height+7, z1+-3, 0);
+        world.setBlock(x1+2, height+7, z1+-2, 0);
+        world.setBlock(x1+4, height+10, z1+-5, 5);
+        world.setBlock(x1+5, height+11, z1+-5, 5);
+        world.setBlock(x1+5, height+12, z1+-4, 5);
+        world.setBlock(x1+5, height+13, z1+-3, 5);
+        world.setBlock(x1+4, height+14, z1+-3, 5);
+        world.setBlock(x1+3, height+14, z1+-3, 5);
+        world.setBlock(x1+3, height+14, z1+-4, 5);
+        world.setBlock(x1+3, height+14, z1+-5, 5);
+        world.setBlock(x1+4, height+14, z1+-4, 5);
+        world.setBlock(x1+5, height+0, z1+-4, 5);
+        world.setBlock(x1+6, height+0, z1+-4, 5);
+        world.setBlock(x1+7, height+0, z1+-4, 5);
+        world.setBlock(x1+8, height+0, z1+-4, 5);
+        world.setBlock(x1+0, height+0, z1+-5, 5);
+        world.setBlock(x1+1, height+0, z1+-5, 5);
+        world.setBlock(x1+2, height+0, z1+-5, 5);
+        world.setBlock(x1+3, height+0, z1+-5, 5);
+        world.setBlock(x1+4, height+0, z1+-5, 5);
+        world.setBlock(x1+5, height+0, z1+-5, 5);
+        world.setBlock(x1+6, height+0, z1+-5, 5);
+        world.setBlock(x1+7, height+0, z1+-5, 5);
+        world.setBlock(x1+8, height+0, z1+-5, 5);
+        world.setBlock(x1+0, height+0, z1+-6, 5);
+        world.setBlock(x1+1, height+0, z1+-6, 5);
+        world.setBlock(x1+2, height+0, z1+-6, 5);
+        world.setBlock(x1+3, height+0, z1+-6, 5);
+        world.setBlock(x1+4, height+0, z1+-6, 5);
+        world.setBlock(x1+5, height+0, z1+-6, 5);
+        world.setBlock(x1+6, height+0, z1+-6, 5);
+        world.setBlock(x1+7, height+0, z1+-6, 5);
+        world.setBlock(x1+8, height+0, z1+-6, 5);
+        world.setBlock(x1+0, height+0, z1+-7, 5);
+        world.setBlock(x1+1, height+0, z1+-7, 5);
+        world.setBlock(x1+2, height+0, z1+-7, 5);
+        world.setBlock(x1+3, height+0, z1+-7, 5);
+        world.setBlock(x1+4, height+0, z1+-7, 5);
+        world.setBlock(x1+5, height+0, z1+-7, 5);
+        world.setBlock(x1+6, height+0, z1+-7, 5);
+        world.setBlock(x1+7, height+0, z1+-7, 5);
+        world.setBlock(x1+8, height+0, z1+-7, 5);
+        world.setBlock(x1+0, height+0, z1+-8, 5);
+        world.setBlock(x1+1, height+0, z1+-8, 5);
+        world.setBlock(x1+2, height+0, z1+-8, 5);
+        world.setBlock(x1+3, height+0, z1+-8, 5);
+        world.setBlock(x1+4, height+0, z1+-8, 5);
+        world.setBlock(x1+5, height+0, z1+-8, 5);
+        world.setBlock(x1+6, height+0, z1+-8, 5);
+        world.setBlock(x1+7, height+0, z1+-8, 5);
+        world.setBlock(x1+8, height+0, z1+-8, 5);
+        world.setBlock(x1+3, height+1, z1+-5, 5);
+        world.setBlock(x1+4, height+2, z1+-5, 5);
+        world.setBlock(x1+5, height+3, z1+-5, 5);
+        world.setBlock(x1+5, height+4, z1+-4, 5);
+        world.setBlock(x1+5, height+5, z1+-3, 5);
+        world.setBlock(x1+4, height+6, z1+-3, 5);
+        world.setBlock(x1+3, height+7, z1+-3, 5);
+        world.setBlock(x1+3, height+8, z1+-4, 5);
+        world.setBlock(x1+3, height+9, z1+-5, 5);
+
+        world.setBlock(x1+6, height+15, z1+-3, 1031);
+
+        var chest = (WickerBasketTileEntity)world.getBlockTileEntity(x1+6, height+15, z1+-3);
+
+        if (chest == null)
+            return;
+
+        chest.setStorageStack(getLoot(4, rand));
+
+    }
+
+    private ItemStack getLoot(int type, Random rand)
+    {
+
+        var loot = new ItemStack(BTWItems.diamondIngot, 1);
+
+        if (type == 0)
+        {
+            var randomLoot = rand.nextInt(1, 6);
+
+            if (randomLoot == 1)
+                loot = new ItemStack(BTWItems.dung, 2);
+            if (randomLoot == 2)
+                loot = new ItemStack(Item.stick, 3);
+            if (randomLoot == 3)
+                loot = new ItemStack(Item.bone, 2);
+            if (randomLoot == 4)
+                loot = new ItemStack(Item.beefRaw, 2);
+            if (randomLoot == 5)
+                loot = new ItemStack(Item.arrow, 8);
+            if (randomLoot == 6)
+                loot = new ItemStack(Item.book, 2);
+        }
+        if (type == 1)
+        {
+            var randomLoot = rand.nextInt(1, 6);
+
+            if (randomLoot == 1)
+                loot = new ItemStack(BTWItems.ironNugget, 2);
+            if (randomLoot == 2)
+                loot = new ItemStack(Item.silk);
+            if (randomLoot == 3)
+                loot = new ItemStack(Item.pickaxeStone, 3);
+            if (randomLoot == 4)
+                loot = new ItemStack(Item.brick, 8);
+            if (randomLoot == 5)
+                loot = new ItemStack(Item.potato, 1);
+            if (randomLoot == 6)
+                loot = new ItemStack(Item.carrot, 2);
+        }
+        if (type == 2)
+        {
+            var randomLoot = rand.nextInt(1, 7);
+
+            if (randomLoot == 1)
+                loot = new ItemStack(BTWItems.baitedFishingRod, 1);
+            if (randomLoot == 2)
+                loot = new ItemStack(Item.swordIron);
+            if (randomLoot == 3)
+                loot = new ItemStack(Item.shovelIron, 1);
+            if (randomLoot == 4)
+                loot = new ItemStack(Item.pickaxeIron, 1);
+            if (randomLoot == 5)
+                loot = new ItemStack(Item.shovelStone, 1);
+            if (randomLoot == 6)
+                loot = new ItemStack(Item.boat, 1);
+            if (randomLoot == 7)
+                loot = new ItemStack(Item.arrow, 12);
+        }
+        if (type == 3)
+        {
+            var randomLoot = rand.nextInt(1, 11);
+
+            if (randomLoot == 1)
+                loot = new ItemStack(BTWItems.soulforgedSteelIngot, 1);
+            if (randomLoot == 2)
+                loot = new ItemStack(Item.ingotIron, 3);
+            if (randomLoot == 3)
+                loot = new ItemStack(Item.emerald, 3);
+            if (randomLoot == 4)
+                loot = new ItemStack(Item.diamond, 2);
+            if (randomLoot == 5)
+                loot = new ItemStack(Item.diamond, 4);
+            if (randomLoot == 6)
+                loot = new ItemStack(Item.appleRed, 2);
+            if (randomLoot == 7)
+                loot = new ItemStack(Item.egg, 1);
+            if (randomLoot == 8)
+                loot = new ItemStack(Item.plateLeather, 1);
+            if (randomLoot == 9)
+                loot = new ItemStack(Item.legsChain, 1);
+            if (randomLoot == 10)
+                loot = new ItemStack(Item.helmetGold, 1);
+            if (randomLoot == 11)
+                loot = new ItemStack(Item.bootsDiamond, 1);
+        }
+        if (type == 4)
+        {
+            var randomLoot = rand.nextInt(1, 5);
+
+            if (randomLoot == 1)
+                loot = new ItemStack(BTWItems.porkDinner, 3);
+            if (randomLoot == 2)
+                loot = new ItemStack(BTWItems.steakDinner, 2);
+            if (randomLoot == 3)
+                loot = new ItemStack(Item.bucketMilk, 1);
+            if (randomLoot == 4)
+                loot = new ItemStack(Item.beefRaw, 5);
+            if (randomLoot == 5)
+                loot = new ItemStack(Item.leather, 4);
+            if (randomLoot == 6)
+                loot = new ItemStack(Item.egg, 6);
+            if (randomLoot == 7)
+                loot = new ItemStack(Item.appleRed, 5);
+            if (randomLoot == 5)
+                loot = new ItemStack(Item.appleGold, 1);
+        }
+
+
+        return loot;
     }
 }
