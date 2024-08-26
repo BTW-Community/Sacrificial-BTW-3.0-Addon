@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "sacrificial",
+  "version": "${version}",
+  "name": "Sacrificial Addon",
+  "description": "Sacrificial Addon",
+  "authors": [
+    "C09"
+  ],
+  "contact": {
+    "homepage": "https://legacyfabric.net/",
+    "sources": "https://github.com/Legacy-Fabric/fabric-example-mod"
+  },
+  "license": "CC BY-SA 3.0",
+  "icon": "assets/modid/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.fabricmc.example.ExampleMod"
+    ],
+    "btw:addon": [
+      "btw.community.example.ExampleAddon"
+    ]
+  },
+  "custom": {
+    "btw:addon_prefix": "EX"
+  },
+  "mixins": [
+    "sacrificial.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.19",
+    "minecraft": "1.6.4"
+  }
+}
