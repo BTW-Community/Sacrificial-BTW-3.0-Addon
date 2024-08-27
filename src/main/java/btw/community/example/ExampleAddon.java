@@ -13,10 +13,12 @@ import btw.world.biome.BiomeDecoratorBase;
 import net.fabricmc.example.*;
 import net.minecraft.src.*;
 
+import java.util.Dictionary;
 import java.util.Random;
 
 public class ExampleAddon extends BTWAddon {
     private static ExampleAddon instance;
+    private Dictionary<String, Vec3> decorateQueue;
 
     private int sacrificialId = 666;
     private int sacrificialKnifeId = sacrificialId + 2;
@@ -26,6 +28,8 @@ public class ExampleAddon extends BTWAddon {
     private Butchery butchery;
     private KnowledgeTome knowledgeTome;
     private PermafreshBlood permafreshBlood;
+
+
     public ExampleAddon() { super(); }
 
     @Override
@@ -51,49 +55,46 @@ public class ExampleAddon extends BTWAddon {
         if (x / 16 == world.getSpawnPoint().posX / 16 && y / 16 == world.getSpawnPoint().posZ / 16)
             spawnPillar(world, world.getSpawnPoint().posX, world.getSpawnPoint().posZ);
 
+        if (!world.doChunksNearChunkExist(x + 8, 60, y + 8, 2))
+            return;
+
         if (biome.biomeName.equals("Ocean"))
             return;
 
-        if (!world.doChunksNearChunkExist(x, 0, y, 1))
-            return;
-
-        world.setBlock(x, 100, y, 4, 2, 2);
-        world.setBlock(x+1, 100, y, 197, 1, 2);
-
-        if (rand.nextInt(800) == 1)
+        if (rand.nextInt(100) == 1)
             spawnShrine(world, x, y);
 
-        if (rand.nextInt(1100) == 1)
+        if (rand.nextInt(100) == 1)
             spawnOutcastHouse(world, x, y);
 
-        if (rand.nextInt(500) == 1)
+        if (rand.nextInt(100) == 1)
             spawnRuins1(world, x, y, rand);
 
-        if (rand.nextInt(600) == 1)
+        if (rand.nextInt(100) == 1)
             spawnRuins2(world, x, y, rand);
 
-        if (rand.nextInt(800) == 1)
+        if (rand.nextInt(100) == 1)
             spawnCastle(world, x, y, rand);
 
-        if (rand.nextInt(1000) == 1)
+        if (rand.nextInt(100) == 1)
             spawnFlought(world, x, y, rand);
 
-        if (rand.nextInt(1000) == 1)
+        if (rand.nextInt(100) == 1)
             spawnTower1(world, x, y, rand);
 
-        if (rand.nextInt(900) == 1)
+        if (rand.nextInt(100) == 1)
             spawnSurfaceDungeon(world, x, y, rand);
 
-        if (rand.nextInt(1000) == 1)
+        if (rand.nextInt(100) == 1)
             spawnHouse1(world, x, y, rand);
 
-        if (rand.nextInt(1200) == 1)
+        if (rand.nextInt(100) == 1)
             spawnChurch(world, x, y, rand);
 
-        if (rand.nextInt(1200) == 1)
+        if (rand.nextInt(200) == 1)
             spawnTowerRare(world, x, y, rand);
 
-        if (rand.nextInt(1200) == 1)
+        if (rand.nextInt(100) == 1)
             spawnBigChurch(world, x, y, rand);
 
     }
@@ -101,6 +102,9 @@ public class ExampleAddon extends BTWAddon {
     private void spawnPillar(World world, int x1, int z1)
     {
         var height = world.getChunkHeightMapMinimum(x1, z1) + 1;
+
+        world.setBlock(x1 + 1, 101, z1 + 1, BTWBlocks.soulforgedSteelBlock.blockID);
+
 
         int y;
         for (y = 0; y <= 100; ++y)

@@ -19,7 +19,7 @@ public abstract class EntityVillagerMixin extends EntityLivingBase {
 	{
 		super(world);
 	}
-	@Inject(at = @At("TAIL"), method = "useRecipe", remap = false)
+	@Inject(at = @At("TAIL"), method = "useRecipe")
 	private void useRecipe(MerchantRecipe recipe, CallbackInfo info) {
         int currentXP = this.getCurrentTradeXP();
         ++currentXP;
