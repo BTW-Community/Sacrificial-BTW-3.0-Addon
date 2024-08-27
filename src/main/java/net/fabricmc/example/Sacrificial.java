@@ -7,14 +7,12 @@ import net.minecraft.src.*;
 import java.util.Random;
 
 public class Sacrificial extends Block {
-	public int itemId;
 	private int cooldown;
 	private boolean onCooldown;
 
 	public Sacrificial(int id, Material material)
 	{
 		super(id, material);
-		itemId = id;
 
 		this.setUnlocalizedName("nmSacrificial");
 	}
@@ -52,6 +50,9 @@ public class Sacrificial extends Block {
 			par5Entity.setFire(100);
 			System.out.println("Sacrifice has been made!");
 			System.out.println(((EntityItem)par5Entity).getEntityName());
+
+			if (((EntityItem)par5Entity).getEntityName().equals("item.item.fcItemMysteryMeatRaw"))
+				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.soulUrn.itemID, 1, 0, 1);
 
 			dropItemsIndividually(par1World, par2, par3, par4, BTWItems.soulUrn.itemID, 1, 0, 1);
 		}

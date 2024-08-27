@@ -6,7 +6,7 @@
   "mixins": [
   ],
   "client": [
-    "BiomeGenBaseMixin"
+    "EntityVillagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
