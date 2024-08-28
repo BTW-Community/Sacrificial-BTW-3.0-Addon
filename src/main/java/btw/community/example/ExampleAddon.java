@@ -52,7 +52,7 @@ public class ExampleAddon extends BTWAddon {
     @Override
     public void decorateWorld(BiomeDecoratorBase decorator, World world, Random rand, int x, int y, BiomeGenBase biome) {
 
-        if (!world.doChunksNearChunkExist(x, 60, y, 1))
+        if (!world.doChunksNearChunkExist(x, 60, y, 3))
             return;
 
         if (x / 16 == world.getSpawnPoint().posX / 16 && y / 16 == world.getSpawnPoint().posZ / 16)
