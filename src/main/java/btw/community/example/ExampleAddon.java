@@ -20,13 +20,15 @@ public class ExampleAddon extends BTWAddon {
     private static ExampleAddon instance;
     private Dictionary<String, Vec3> decorateQueue;
 
-    private int sacrificialId = 666;
+    private int sacrificialId = 666 - 256;
     private int sacrificialKnifeId = sacrificialId + 2;
+    private int tomeBaseID = 777- 256;
     private Sacrificial sacrificial;
 
     private SacrificialItem sacrificialItem;
     private Butchery butchery;
     private KnowledgeTome knowledgeTome;
+    private AttackTome attackTome;
     private PermafreshBlood permafreshBlood;
 
 
@@ -46,6 +48,8 @@ public class ExampleAddon extends BTWAddon {
         permafreshBlood = new PermafreshBlood(sacrificialId+4, 10, 0.25f, true);
         knowledgeTome = new KnowledgeTome(sacrificialId+5);
 
+        attackTome = new AttackTome(tomeBaseID);
+
         NewVillagerTrades.AddVilagerTrades(butchery, permafreshBlood, knowledgeTome);
     }
 
@@ -63,40 +67,40 @@ public class ExampleAddon extends BTWAddon {
         if (biome.biomeName.equals("Ocean"))
             return;
 
-        if (rand.nextInt(400) == 1)
+        if (rand.nextInt(200) == 1)
             spawnShrine(world, x, y);
 
-        if (rand.nextInt(400) == 1)
+        if (rand.nextInt(200) == 1)
             spawnOutcastHouse(world, x, y);
 
-        if (rand.nextInt(400) == 1)
+        if (rand.nextInt(200) == 1)
             spawnRuins1(world, x, y, rand);
 
-        if (rand.nextInt(400) == 1)
+        if (rand.nextInt(200) == 1)
             spawnRuins2(world, x, y, rand);
 
-        if (rand.nextInt(400) == 1)
+        if (rand.nextInt(200) == 1)
             spawnCastle(world, x, y, rand);
 
-        if (rand.nextInt(400) == 1)
+        if (rand.nextInt(200) == 1)
             spawnFlought(world, x, y, rand);
 
-        if (rand.nextInt(400) == 1)
+        if (rand.nextInt(200) == 1)
             spawnTower1(world, x, y, rand);
 
-        if (rand.nextInt(400) == 1)
+        if (rand.nextInt(200) == 1)
             spawnSurfaceDungeon(world, x, y, rand);
 
-        if (rand.nextInt(400) == 1)
+        if (rand.nextInt(200) == 1)
             spawnHouse1(world, x, y, rand);
 
-        if (rand.nextInt(400) == 1)
+        if (rand.nextInt(200) == 1)
             spawnChurch(world, x, y, rand);
 
-        if (rand.nextInt(450) == 1)
+        if (rand.nextInt(150) == 1)
             spawnTowerRare(world, x, y, rand);
 
-        if (rand.nextInt(400) == 1)
+        if (rand.nextInt(200) == 1)
             spawnBigChurch(world, x, y, rand);
 
     }
@@ -932,7 +936,7 @@ public class ExampleAddon extends BTWAddon {
 
     private void spawnTower1(World world, int x1, int z1, Random rand)
     {
-        var height = world.getChunkHeightMapMinimum(x1, z1) + 1;
+        var height = world.getChunkHeightMapMinimum(x1, z1);
 
         world.setBlock(x1+2, height+0, z1+0, 4);
         world.setBlock(x1+3, height+0, z1+0, 4);
@@ -1859,7 +1863,7 @@ public class ExampleAddon extends BTWAddon {
 
     private void spawnSurfaceDungeon(World world, int x1, int z1, Random rand)
     {
-        var height = world.getChunkHeightMapMinimum(x1, z1) + 1;
+        var height = world.getChunkHeightMapMinimum(x1, z1);
 
         world.setBlock(x1+1, height+0, z1+0, 4);
         world.setBlock(x1+1, height+0, z1+1, 4);
@@ -2260,7 +2264,7 @@ public class ExampleAddon extends BTWAddon {
 
     private void spawnHouse1(World world, int x1, int z1, Random rand)
     {
-        var height = world.getChunkHeightMapMinimum(x1, z1) + 1;
+        var height = world.getChunkHeightMapMinimum(x1, z1);
 
         if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1+40, 0, z1+40, 3))
             spawnHouse1(world, x1+40, z1+40, rand);
@@ -2576,7 +2580,7 @@ public class ExampleAddon extends BTWAddon {
 
     private void spawnHouse2(World world, int x1, int z1, Random rand)
     {
-        var height = world.getChunkHeightMapMinimum(x1, z1) + 1;
+        var height = world.getChunkHeightMapMinimum(x1, z1);
 
         if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1+40, 0, z1+40, 3))
             spawnHouse2(world, x1+40, z1+40, rand);
@@ -3223,7 +3227,7 @@ public class ExampleAddon extends BTWAddon {
 
     private void spawnChurch(World world, int x1, int z1, Random rand)
     {
-        var height = world.getChunkHeightMapMinimum(x1, z1) + 1;
+        var height = world.getChunkHeightMapMinimum(x1, z1);
 
         if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1+40, 0, z1+40, 3))
             spawnHouse2(world, x1+40, z1+40, rand);
@@ -3816,7 +3820,7 @@ public class ExampleAddon extends BTWAddon {
 
     private void spawnTowerRare(World world, int x1, int z1, Random rand)
     {
-        var height = world.getChunkHeightMapMinimum(x1, z1) + 1;
+        var height = world.getChunkHeightMapMinimum(x1, z1);
 
         world.setBlock(x1+2, height+0, z1+0, 4);
         world.setBlock(x1+3, height+0, z1+0, 4);
@@ -4703,7 +4707,7 @@ public class ExampleAddon extends BTWAddon {
 
     private void spawnBigChurch(World world, int x1, int z1, Random rand)
     {
-        var height = world.getChunkHeightMapMinimum(x1, z1) + 1;
+        var height = world.getChunkHeightMapMinimum(x1, z1);
 
         var villager = new LibrarianVillagerEntity(world);
         villager.setLocationAndAngles(x1+7, height+3, z1+-9, 0, 0);
@@ -5205,7 +5209,7 @@ public class ExampleAddon extends BTWAddon {
 
         if (type == 5)
         {
-            var randomLoot = rand.nextInt(1, 4);
+            var randomLoot = rand.nextInt(1, 5);
 
             if (randomLoot == 1)
                 loot = new ItemStack(knowledgeTome);
@@ -5213,6 +5217,8 @@ public class ExampleAddon extends BTWAddon {
                 loot = new ItemStack(permafreshBlood);
             if (randomLoot == 3)
                 loot = new ItemStack(butchery);
+            if (randomLoot == 4)
+                loot = new ItemStack(attackTome);
         }
 
 
