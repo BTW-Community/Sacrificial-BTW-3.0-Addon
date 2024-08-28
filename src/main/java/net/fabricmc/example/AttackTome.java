@@ -9,7 +9,7 @@ public class AttackTome extends Item {
 	{
 		super(id);
 
-		this.setMaxDamage(1);
+		this.setMaxDamage(20);
 		this.setCreativeTab(CreativeTabs.tabCombat);
 
 		this.setUnlocalizedName("nmAttackTome");

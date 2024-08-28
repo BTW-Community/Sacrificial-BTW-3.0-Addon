@@ -30,7 +30,7 @@ public class ExampleAddon extends BTWAddon {
     private KnowledgeTome knowledgeTome;
     private AttackTome attackTome;
     private PermafreshBlood permafreshBlood;
-
+    private RegenerationTome regenTome;
 
     public ExampleAddon() { super(); }
 
@@ -49,7 +49,7 @@ public class ExampleAddon extends BTWAddon {
         knowledgeTome = new KnowledgeTome(sacrificialId+5);
 
         attackTome = new AttackTome(tomeBaseID);
-
+        regenTome = new RegenerationTome(tomeBaseID + 1);
         NewVillagerTrades.AddVilagerTrades(butchery, permafreshBlood, knowledgeTome);
     }
 
@@ -1832,7 +1832,7 @@ public class ExampleAddon extends BTWAddon {
         if (chest == null)
             return;
 
-        chest.setStorageStack(getLoot(3, rand));
+        chest.setStorageStack(getLoot(6, rand));
 
         world.setBlock(x1+5, height+16, z1+5, 52);
         var spawner4 = (TileEntityMobSpawner)world.getBlockTileEntity(x1+5, height+16, z1+5);
@@ -5209,7 +5209,7 @@ public class ExampleAddon extends BTWAddon {
 
         if (type == 5)
         {
-            var randomLoot = rand.nextInt(1, 5);
+            var randomLoot = rand.nextInt(1, 4);
 
             if (randomLoot == 1)
                 loot = new ItemStack(knowledgeTome);
@@ -5217,8 +5217,15 @@ public class ExampleAddon extends BTWAddon {
                 loot = new ItemStack(permafreshBlood);
             if (randomLoot == 3)
                 loot = new ItemStack(butchery);
-            if (randomLoot == 4)
+        }
+        if (type == 6)
+        {
+            var randomLoot = rand.nextInt(1, 3);
+
+            if (randomLoot == 1)
                 loot = new ItemStack(attackTome);
+            if (randomLoot == 2)
+                loot = new ItemStack(regenTome);
         }
 
 
