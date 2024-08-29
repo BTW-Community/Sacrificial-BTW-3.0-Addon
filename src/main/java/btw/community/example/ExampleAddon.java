@@ -34,7 +34,7 @@ public class ExampleAddon extends BTWAddon {
     private KnowledgeTome knowledgeTome;
     private AttackTome attackTome;
     private PermafreshBlood permafreshBlood;
-    private RegenerationTome regenTome;
+    private HealTome healTome;
 
     public ExampleAddon() { super(); }
 
@@ -58,7 +58,7 @@ public class ExampleAddon extends BTWAddon {
         knowledgeTome = new KnowledgeTome(sacrificialId+12);
 
         attackTome = new AttackTome(tomeBaseID);
-        regenTome = new RegenerationTome(tomeBaseID + 1);
+        healTome = new HealTome(tomeBaseID + 1);
         NewVillagerTrades.AddVilagerTrades(butchery, permafreshBlood, knowledgeTome);
     }
 
@@ -5940,7 +5940,7 @@ public class ExampleAddon extends BTWAddon {
             if (randomLoot == 1)
                 loot = new ItemStack(attackTome);
             if (randomLoot == 2)
-                loot = new ItemStack(regenTome);
+                loot = new ItemStack(healTome);
         }
 
 

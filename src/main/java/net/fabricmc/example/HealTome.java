@@ -2,15 +2,15 @@ package net.fabricmc.example;
 
 import net.minecraft.src.*;
 
-public class RegenerationTome extends Item {
-	public RegenerationTome(int id)
+public class HealTome extends Item {
+	public HealTome(int id)
 	{
 		super(id);
 
 		this.setMaxDamage(10);
 		this.setCreativeTab(CreativeTabs.tabCombat);
 
-		this.setUnlocalizedName("nmRegenerationTome");
+		this.setUnlocalizedName("nmHealTome");
 	}
 
 	@Override
