@@ -3872,12 +3872,9 @@ public class ExampleAddon extends BTWAddon {
         world.setBlock(x1+4, height+3, z1+3, 5);
         world.setBlock(x1+4, height+4, z1+4, 52);
         world.setBlock(x1+8, height+-4, z1+3, 52);
-        var spawner1 = (TileEntityMobSpawner)world.getBlockTileEntity(x1+8, height+-4, z1+3);
-        spawner1.getSpawnerLogic().setMobID("Zombie");
 
         world.setBlock(x1+4, height+8, z1+4, 52);
-        var spawner2 = (TileEntityMobSpawner)world.getBlockTileEntity(x1+4, height+8, z1+4);
-        spawner2.getSpawnerLogic().setMobID("Skeleton");
+
 
         world.setBlock(x1+4, height+3, z1+5, 5);
         world.setBlock(x1+4, height+3, z1+4, 5);
@@ -4164,12 +4161,8 @@ public class ExampleAddon extends BTWAddon {
         world.setBlock(x1+4, height+11, z1+2, 5);
         world.setBlock(x1+4, height+11, z1+3, 5);
         world.setBlock(x1+4, height+12, z1+4, 52);
-        var spawner3 = (TileEntityMobSpawner)world.getBlockTileEntity(x1+4, height+12, z1+4);
-        spawner3.getSpawnerLogic().setMobID("Skeleton");
 
         world.setBlock(x1+4, height+16, z1+4, 52);
-        var spawner4 = (TileEntityMobSpawner)world.getBlockTileEntity(x1+4, height+16, z1+4);
-        spawner4.getSpawnerLogic().setMobID("Skeleton");
 
         world.setBlock(x1+4, height+11, z1+5, 5);
         world.setBlock(x1+4, height+11, z1+4, 5);
@@ -4456,8 +4449,6 @@ public class ExampleAddon extends BTWAddon {
         world.setBlock(x1+4, height+19, z1+2, 5);
         world.setBlock(x1+4, height+19, z1+3, 5);
         world.setBlock(x1+4, height+20, z1+4, 52);
-        var spawner5 = (TileEntityMobSpawner)world.getBlockTileEntity(x1+4, height+20, z1+4);
-        spawner5.getSpawnerLogic().setMobID("Skeleton");
 
         world.setBlock(x1+4, height+24, z1+4, 1031);
         var chest = (WickerBasketTileEntity)world.getBlockTileEntity(x1+4, height+24, z1+4);
@@ -4721,6 +4712,17 @@ public class ExampleAddon extends BTWAddon {
         world.setBlock(x1+8, height+23, z1+4, 4);
         world.setBlock(x1+8, height+23, z1+2, 4);
         world.setBlock(x1+1, height+23, z1+7, 4);
+
+        var spawner5 = (TileEntityMobSpawner)world.getBlockTileEntity(x1+4, height+20, z1+4);
+        spawner5.getSpawnerLogic().setMobID("Skeleton");
+        var spawner4 = (TileEntityMobSpawner)world.getBlockTileEntity(x1+4, height+16, z1+4);
+        spawner4.getSpawnerLogic().setMobID("Skeleton");
+        var spawner3 = (TileEntityMobSpawner)world.getBlockTileEntity(x1+4, height+12, z1+4);
+        spawner3.getSpawnerLogic().setMobID("Skeleton");
+        var spawner1 = (TileEntityMobSpawner)world.getBlockTileEntity(x1+8, height+-4, z1+3);
+        spawner1.getSpawnerLogic().setMobID("Zombie");
+        var spawner2 = (TileEntityMobSpawner)world.getBlockTileEntity(x1+4, height+8, z1+4);
+        spawner2.getSpawnerLogic().setMobID("Skeleton");
     }
 
     private void spawnBigChurch(World world, int x1, int z1, Random rand)
