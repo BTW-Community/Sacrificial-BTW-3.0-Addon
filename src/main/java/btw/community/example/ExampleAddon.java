@@ -24,8 +24,11 @@ public class ExampleAddon extends BTWAddon {
     private int sacrificialKnifeId = sacrificialId + 2;
     private int tomeBaseID = 777- 256;
     private Sacrificial sacrificial;
-
     private SacrificialItem sacrificialItem;
+
+    private CrudeSacrificial crudeSacrificial;
+    private CrudeSacrificialItem crudeSacrificialItem;
+
     private Butchery butchery;
     private KnowledgeTome knowledgeTome;
     private AttackTome attackTome;
@@ -39,14 +42,19 @@ public class ExampleAddon extends BTWAddon {
         AddonHandler.logMessage(this.getName() + " Version " + this.getVersionString() + " Initializing...");
 
         sacrificial = new Sacrificial(sacrificialId, Material.rock);
-        sacrificialItem = new SacrificialItem(sacrificialId + 1, sacrificialId);
+        sacrificialItem = new SacrificialItem(sacrificialId, sacrificialId);
+
+        crudeSacrificial = new CrudeSacrificial(sacrificialId + 3, Material.rock);
+        crudeSacrificialItem = new CrudeSacrificialItem(sacrificialId + 3, sacrificialId + 3);
+
         var sacrificialKnife = new SacrificialKnife(sacrificialKnifeId, EnumToolMaterial.SOULFORGED_STEEL);
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialItem, 1), new Object[] {BTWBlocks.looseCobblestone, Block.dragonEgg});
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialKnife, 1), new Object[] {BTWItems.sharpStone, BTWItems.soulUrn});
+        RecipeManager.addShapelessRecipe(new ItemStack(crudeSacrificialItem, 1), new Object[] {BTWBlocks.looseCobblestone, BTWBlocks.looseCobblestone});
 
-        butchery = new Butchery(sacrificialId+3, EnumToolMaterial.SOULFORGED_STEEL);
-        permafreshBlood = new PermafreshBlood(sacrificialId+4, 10, 0.25f, true);
-        knowledgeTome = new KnowledgeTome(sacrificialId+5);
+        butchery = new Butchery(sacrificialId+10, EnumToolMaterial.SOULFORGED_STEEL);
+        permafreshBlood = new PermafreshBlood(sacrificialId+11, 10, 0.25f, true);
+        knowledgeTome = new KnowledgeTome(sacrificialId+12);
 
         attackTome = new AttackTome(tomeBaseID);
         regenTome = new RegenerationTome(tomeBaseID + 1);
@@ -61,8 +69,6 @@ public class ExampleAddon extends BTWAddon {
 
         if (x / 16 == world.getSpawnPoint().posX / 16 && y / 16 == world.getSpawnPoint().posZ / 16)
             spawnPillar(world, world.getSpawnPoint().posX, world.getSpawnPoint().posZ);
-
-
 
         if (biome.biomeName.equals("Ocean"))
             return;

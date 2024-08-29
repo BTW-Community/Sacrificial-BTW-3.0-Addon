@@ -14,7 +14,21 @@ public class Sacrificial extends Block {
 	{
 		super(id, material);
 
-		this.setUnlocalizedName("nmSacrificial");
+		this.setUnlocalizedName("nmIndustrialSacrificial");
+	}
+
+	public int quantityDropped(Random rand) {
+		return 1;
+	}
+
+	public int idDropped(int iMetaData, Random random, int iFortuneModifier) {
+		return 666;
+	}
+
+	@Override
+	public float getExplosionResistance(Entity entity, World world, int i, int j, int k)
+	{
+		return 9999;
 	}
 
 	@Override
@@ -47,14 +61,22 @@ public class Sacrificial extends Block {
 
 			onCooldown = true;
 
-			par5Entity.setFire(100);
-			System.out.println("Sacrifice has been made!");
-			System.out.println(((EntityItem)par5Entity).getEntityName());
+			if (par5Entity instanceof EntityItem item)
+			{
+				var stack = item.getEntityItem();
 
-			if (((EntityItem)par5Entity).getEntityName().equals("item.item.fcItemMysteryMeatRaw"))
-				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.soulUrn.itemID, 1, 0, 1);
+				for(int i = 1; i <= stack.stackSize; ++i)
+				{
+					dropItemsIndividually(par1World, par2, par3, par4, BTWItems.soulUrn.itemID, 1, 0, 1);
 
-			dropItemsIndividually(par1World, par2, par3, par4, BTWItems.soulUrn.itemID, 1, 0, 1);
+
+					if (((EntityItem)par5Entity).getEntityName().equals("item.item.fcItemMysteryMeatRaw"))
+						dropItemsIndividually(par1World, par2, par3, par4, BTWItems.soulUrn.itemID, 1, 0, 1);
+				}
+
+				par5Entity.setFire(100);
+				par1World.removeEntity(par5Entity);
+			}
 		}
 	}
 

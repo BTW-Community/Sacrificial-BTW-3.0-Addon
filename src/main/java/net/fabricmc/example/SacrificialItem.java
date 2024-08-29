@@ -11,6 +11,6 @@ public class SacrificialItem extends PlaceAsBlockItem {
 		this.setCreativeTab(CreativeTabs.tabMisc);
 		//this.setAssociatedBlockID(666);
 
-		this.setUnlocalizedName("nmSacrificial");
+		this.setUnlocalizedName("nmIndustrialSacrificial");
 	}
 }
