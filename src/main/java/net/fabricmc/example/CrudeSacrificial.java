@@ -82,12 +82,10 @@ public class CrudeSacrificial extends Block {
 
 		// Chance to drop rare items
 		if (rand.nextInt(1, 100) == 1) {
-			var random = rand.nextInt(1, 4);
+			var random = rand.nextInt(1, 3);
 			if (random == 1)
 				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.plateBreastplate.itemID, 1, 100, 1);
 			if (random == 2)
-				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.ancientProphecy.itemID, 2, 0, 1);
-			if (random == 3)
 				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.corpseEye.itemID, 1, 0, 1);
 		} else if (rand.nextInt(1, 20) == 1) {
 			var random = rand.nextInt(1, 5);
@@ -102,10 +100,10 @@ public class CrudeSacrificial extends Block {
 				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.gimpHelmet.itemID, 1, 250, 1);
 
 		} else {
-			var random = rand.nextInt(1, 9);
+			var random = rand.nextInt(1, 6);
 
 			if (random == 1)
-				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.ironOreChunk.itemID, 1, 0, 1);
+				dropItemsIndividually(par1World, par2, par3, par4, Item.ingotIron.itemID, 1, 0, 1);
 
 			if (random == 2)
 				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.curedMeat.itemID, 2, 0, 1);
@@ -117,17 +115,7 @@ public class CrudeSacrificial extends Block {
 				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.boneClub.itemID, 1, 0, 1);
 
 			if (random == 5)
-				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.boneFishHook.itemID, 1, 0, 1);
-
-			if (random == 6)
-				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.breadDough.itemID, 2, 0, 0.5f);
-
-			if (random == 7)
 				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.bowDrill.itemID, 1, 0, 1);
-
-			if (random == 8)
-				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.sawDust.itemID, 15, 0, 1);
-
 		}
 	}
 }

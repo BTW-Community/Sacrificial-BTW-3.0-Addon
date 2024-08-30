@@ -48,10 +48,16 @@ public class ExampleAddon extends BTWAddon {
         crudeSacrificial = new CrudeSacrificial(sacrificialId + 3, Material.rock);
         crudeSacrificialItem = new CrudeSacrificialItem(sacrificialId + 3, sacrificialId + 3);
 
+        new BloodBush(sacrificialId + 4, Material.leaves);
+        new BloodBushItem(sacrificialId + 4, sacrificialId + 4);
+        var bloodBerries = new BloodBerries(sacrificialId + 5, 1, 1f, false);
+        var bloodBottle = new BloodBottle(sacrificialId + 6);
+
         var sacrificialKnife = new SacrificialKnife(sacrificialKnifeId, EnumToolMaterial.SOULFORGED_STEEL);
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialItem, 1), new Object[] {BTWBlocks.looseCobblestone, Block.dragonEgg});
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialKnife, 1), new Object[] {BTWItems.sharpStone, BTWItems.soulUrn});
         RecipeManager.addShapelessRecipe(new ItemStack(crudeSacrificialItem, 1), new Object[] {BTWBlocks.looseCobblestone, BTWBlocks.looseCobblestone});
+        RecipeManager.addShapelessRecipe(new ItemStack(bloodBottle, 1), new Object[] {Item.glassBottle, bloodBerries });
 
         butchery = new Butchery(sacrificialId+10, EnumToolMaterial.SOULFORGED_STEEL);
         permafreshBlood = new PermafreshBlood(sacrificialId+11, 10, 0.25f, true);
@@ -75,7 +81,7 @@ public class ExampleAddon extends BTWAddon {
 
         if (biome.biomeName.equals("Ocean"))
         {
-            if (rand.nextInt(20) == 1)
+            if (rand.nextInt(150) == 1)
                 spawnBoat(world, x, y, rand);
 
             return;
@@ -83,6 +89,9 @@ public class ExampleAddon extends BTWAddon {
 
         if (rand.nextInt(200) == 1)
             spawnShrine(world, x, y);
+
+        if (rand.nextInt(10) == 1)
+            spawnBloodBush(world, x, y, rand);
 
         if (rand.nextInt(200) == 1)
             spawnOutcastHouse(world, x, y);
@@ -119,6 +128,9 @@ public class ExampleAddon extends BTWAddon {
 
         if (rand.nextInt(200) == 1)
             spawnFloat(world, x, y, rand);
+
+        if (rand.nextInt(200) == 1)
+            spawnStand(world, x, y, rand);
 
     }
 
@@ -222,6 +234,23 @@ public class ExampleAddon extends BTWAddon {
         var chest = (WickerBasketTileEntity)world.getBlockTileEntity(x1+4, height+2, z1+4);
         var loot = new ItemStack(BTWItems.ironChisel);
         chest.setStorageStack(loot);
+    }
+
+    private void spawnBloodBush(World world, int x1, int z1, Random rand)
+    {
+        var lastAirBlock = 100;
+
+        for(var i = 100; i >= 0; --i)
+        {
+            if (world.getBlockId(x1, i, z1) == 0)
+            {
+                lastAirBlock = i;
+            }
+            else
+            {
+                world.setBlock(x1, lastAirBlock, z1, sacrificialId + 4);
+            }
+        }
     }
 
     private void spawnOutcastHouse(World world, int x1, int z1)
@@ -2282,9 +2311,9 @@ public class ExampleAddon extends BTWAddon {
     {
         var height = world.getChunkHeightMapMinimum(x1, z1);
 
-        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1+40, 0, z1+40, 3))
+        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1+40, 0, z1+40, 16))
             spawnHouse1(world, x1+40, z1+40, rand);
-        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1-40, 0, z1, 3))
+        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1-40, 0, z1, 16))
             spawnHouse2(world, x1-40, z1, rand);
 
         world.setBlock(x1+2, height+0, z1+-1, 159);
@@ -2599,9 +2628,9 @@ public class ExampleAddon extends BTWAddon {
     {
         var height = world.getChunkHeightMapMinimum(x1, z1);
 
-        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1+40, 0, z1+40, 3))
+        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1+40, 0, z1+40, 16))
             spawnHouse2(world, x1+40, z1+40, rand);
-        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1-40, 0, z1, 3))
+        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1-40, 0, z1, 16))
             spawnHouse1(world, x1-40, z1, rand);
 
         world.setBlock(x1+2, height+0, z1+-1, 159);
@@ -3247,9 +3276,9 @@ public class ExampleAddon extends BTWAddon {
     {
         var height = world.getChunkHeightMapMinimum(x1, z1);
 
-        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1+40, 0, z1+40, 3))
+        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1+40, 0, z1+40, 16))
             spawnHouse2(world, x1+40, z1+40, rand);
-        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1-40, 0, z1, 3))
+        if (rand.nextInt(3) == 1 && world.doChunksNearChunkExist(x1-40, 0, z1, 16))
             spawnHouse1(world, x1-40, z1, rand);
 
 
@@ -5814,6 +5843,41 @@ public class ExampleAddon extends BTWAddon {
             return;
 
         chest.setStorageStack(getLoot(6, rand));
+
+    }
+
+    private void spawnStand(World world, int x1, int z1, Random rand)
+    {
+        var height = world.getChunkHeightMapMinimum(x1, z1);
+
+        world.setBlock(x1+0, height+0, z1+0, 5);
+        world.setBlock(x1+0, height+0, z1+1, 5);
+        world.setBlock(x1+0, height+0, z1+2, 5);
+        world.setBlock(x1+0, height+0, z1+3, 5);
+        world.setBlock(x1+1, height+0, z1+3, 5);
+        world.setBlock(x1+1, height+0, z1+2, 5);
+        world.setBlock(x1+1, height+0, z1+1, 5);
+        world.setBlock(x1+1, height+0, z1+0, 5);
+        world.setBlock(x1+2, height+0, z1+0, 5);
+        world.setBlock(x1+3, height+0, z1+0, 5);
+        world.setBlock(x1+4, height+0, z1+0, 5);
+        world.setBlock(x1+4, height+1, z1+0, 5);
+        world.setBlock(x1+0, height+1, z1+0, 5);
+        world.setBlock(x1+1, height+1, z1+2, 1031);
+        var chest = (WickerBasketTileEntity)world.getBlockTileEntity(x1+1, height+1, z1+2);
+
+        if (chest == null)
+            return;
+
+        chest.setStorageStack(getLoot(3, rand));
+
+        world.setBlock(x1+1, height+1, z1+1, 1031);
+        chest = (WickerBasketTileEntity)world.getBlockTileEntity(x1+1, height+1, z1+1);
+
+        if (chest == null)
+            return;
+
+        chest.setStorageStack(getLoot(4, rand));
 
     }
 
