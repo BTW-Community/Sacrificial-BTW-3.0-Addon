@@ -59,6 +59,16 @@ public class ExampleAddon extends BTWAddon {
         RecipeManager.addShapelessRecipe(new ItemStack(crudeSacrificialItem, 1), new Object[] {BTWBlocks.looseCobblestone, BTWBlocks.looseCobblestone});
         RecipeManager.addShapelessRecipe(new ItemStack(bloodBottle, 1), new Object[] {Item.glassBottle, bloodBerries });
 
+        RecipeManager.addShapelessRecipeWithSecondaryOutputIndicator(new ItemStack(Item.monsterPlacer, 1, 90), new ItemStack(Item.glassBottle), new Object[] {bloodBottle, BTWItems.soulUrn, Item.porkRaw });
+        RecipeManager.addShapelessRecipeWithSecondaryOutputIndicator(new ItemStack(Item.monsterPlacer, 1, 91), new ItemStack(Item.glassBottle), new Object[] {bloodBottle, BTWItems.soulUrn, BTWItems.rawMutton});
+        RecipeManager.addShapelessRecipeWithSecondaryOutputIndicator(new ItemStack(Item.monsterPlacer, 1, 92), new ItemStack(Item.glassBottle), new Object[] {bloodBottle, BTWItems.soulUrn, Item.beefRaw });
+        RecipeManager.addShapelessRecipeWithSecondaryOutputIndicator(new ItemStack(Item.monsterPlacer, 1, 93), new ItemStack(Item.glassBottle), new Object[] {bloodBottle, BTWItems.soulUrn, Item.chickenRaw });
+        RecipeManager.addShapelessRecipeWithSecondaryOutputIndicator(new ItemStack(Item.monsterPlacer, 1, 95), new ItemStack(Item.glassBottle), new Object[] {bloodBottle, BTWItems.soulUrn, BTWItems.rawWolfChop });
+        RecipeManager.addShapelessRecipeWithSecondaryOutputIndicator(new ItemStack(Item.monsterPlacer, 1, 100), new ItemStack(Item.glassBottle), new Object[] {bloodBottle, BTWItems.soulUrn, BTWItems.rawCheval });
+        RecipeManager.addShapelessRecipeWithSecondaryOutputIndicator(new ItemStack(Item.monsterPlacer, 1, 96), new ItemStack(Item.glassBottle), new Object[] {bloodBottle, BTWItems.soulUrn, BTWItems.redMushroom });
+
+        RecipeManager.addShapelessRecipeWithSecondaryOutputIndicator(new ItemStack(Item.monsterPlacer, 1, 602), new ItemStack(Item.glassBottle), new Object[] {bloodBottle, BTWItems.soulUrn, BTWItems.rawMysteryMeat });
+
         butchery = new Butchery(sacrificialId+10, EnumToolMaterial.SOULFORGED_STEEL);
         permafreshBlood = new PermafreshBlood(sacrificialId+11, 10, 0.25f, true);
         knowledgeTome = new KnowledgeTome(sacrificialId+12);
