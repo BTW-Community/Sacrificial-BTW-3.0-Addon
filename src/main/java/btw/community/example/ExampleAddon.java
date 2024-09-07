@@ -15,6 +15,7 @@ import btw.item.BTWItems;
 import btw.world.biome.BiomeDecoratorBase;
 import net.fabricmc.example.blocks.BloodBush;
 import net.fabricmc.example.blocks.CrudeSacrificial;
+import net.fabricmc.example.blocks.DemonicCircle;
 import net.fabricmc.example.blocks.Sacrificial;
 import net.fabricmc.example.entity.DemonHertraEntity;
 import net.fabricmc.example.entity.DemonHertraModel;
@@ -63,8 +64,11 @@ public class ExampleAddon extends BTWAddon {
 
         var sacrificialKnife = new SacrificialKnife(sacrificialKnifeId, EnumToolMaterial.SOULFORGED_STEEL);
 
+        new DemonicCircle(sacrificialId + 7, Material.redstoneLight);
+        new DemonicCircleItem(sacrificialId + 7, sacrificialId + 7);
+
         EntityList.addMapping(DemonHertraEntity.class, "demonHertra", 666, 1, 3);
-        RenderManager.addEntityRenderer(DemonHertraEntity.class, new DemonHertraRenderer(new DemonHertraModel(), (ModelBase)null));
+        RenderManager.addEntityRenderer(DemonHertraEntity.class, new DemonHertraRenderer(new DemonHertraModel(), null));
 
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialItem, 1), new Object[] {BTWBlocks.looseCobblestone, Block.dragonEgg});
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialKnife, 1), new Object[] {BTWItems.sharpStone, BTWItems.soulUrn});
