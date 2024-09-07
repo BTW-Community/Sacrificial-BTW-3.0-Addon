@@ -1,8 +1,7 @@
-package net.fabricmc.example;
+package net.fabricmc.example.items;
 
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Item;
-import net.minecraft.src.ItemFood;
 
 public class KnowledgeTome extends Item {
 	public KnowledgeTome(int id)

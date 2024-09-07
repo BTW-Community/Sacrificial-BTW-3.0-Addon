@@ -1,6 +1,5 @@
-package net.fabricmc.example;
+package net.fabricmc.example.items;
 
-import btw.item.BTWItems;
 import net.minecraft.src.*;
 
 public class Butchery extends ItemSword {

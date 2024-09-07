@@ -1,7 +1,6 @@
-package net.fabricmc.example;
+package net.fabricmc.example.blocks;
 
 import btw.item.BTWItems;
-import net.fabricmc.api.ModInitializer;
 import net.minecraft.src.*;
 
 import java.util.Random;

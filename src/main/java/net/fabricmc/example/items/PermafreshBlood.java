@@ -1,9 +1,7 @@
-package net.fabricmc.example;
+package net.fabricmc.example.items;
 
 import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.EnumToolMaterial;
 import net.minecraft.src.ItemFood;
-import net.minecraft.src.ItemSword;
 
 public class PermafreshBlood extends ItemFood {
 	public PermafreshBlood(int id, int i2, float i3, boolean i4)

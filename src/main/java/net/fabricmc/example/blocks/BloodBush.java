@@ -1,10 +1,8 @@
-package net.fabricmc.example;
+package net.fabricmc.example.blocks;
 
 import btw.block.BTWBlocks;
 import btw.block.util.Flammability;
-import btw.item.BTWItems;
 import net.minecraft.src.*;
-import net.minecraft.src.BlockSapling;
 
 import java.util.Random;
 

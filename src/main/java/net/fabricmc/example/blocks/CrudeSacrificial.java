@@ -1,9 +1,8 @@
-package net.fabricmc.example;
+package net.fabricmc.example.blocks;
 
 import btw.item.BTWItems;
 import net.minecraft.src.Item;
 import net.minecraft.src.*;
-import btw.block.blocks.AnvilBlock;
 
 import java.util.Random;
 

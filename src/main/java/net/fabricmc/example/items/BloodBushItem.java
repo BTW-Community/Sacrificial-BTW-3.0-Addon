@@ -1,11 +1,7 @@
-package net.fabricmc.example;
+package net.fabricmc.example.items;
 
 import btw.item.items.PlaceAsBlockItem;
-import net.minecraft.src.Block;
 import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.Material;
-
-import java.util.Random;
 
 public class BloodBushItem extends PlaceAsBlockItem {
 	public BloodBushItem(int id, int blockId)

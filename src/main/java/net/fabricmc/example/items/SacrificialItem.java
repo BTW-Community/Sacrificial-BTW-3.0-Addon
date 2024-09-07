@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package net.fabricmc.example.items;
 
 import btw.item.items.PlaceAsBlockItem;
 import net.minecraft.src.*;

@@ -1,7 +1,5 @@
-package net.fabricmc.example;
+package net.fabricmc.example.items;
 
-import btw.entity.InfiniteArrowEntity;
-import btw.item.BTWItems;
 import net.minecraft.src.*;
 
 public class AttackTome extends Item {

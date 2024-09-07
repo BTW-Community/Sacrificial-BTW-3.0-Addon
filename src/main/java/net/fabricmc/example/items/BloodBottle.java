@@ -1,9 +1,7 @@
-package net.fabricmc.example;
+package net.fabricmc.example.items;
 
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Item;
-import net.minecraft.src.ItemFood;
-import net.minecraft.src.ItemGlassBottle;
 
 public class BloodBottle extends Item {
 	public BloodBottle(int id)

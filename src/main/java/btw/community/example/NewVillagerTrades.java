@@ -1,13 +1,10 @@
 package btw.community.example;
 
-import btw.entity.mob.villager.FarmerVillagerEntity;
-import btw.entity.mob.villager.PriestVillagerEntity;
 import btw.entity.mob.villager.trade.TradeProvider;
-import btw.entity.mob.villager.trade.VillagerTrade;
 import btw.item.BTWItems;
-import net.fabricmc.example.Butchery;
-import net.fabricmc.example.KnowledgeTome;
-import net.fabricmc.example.PermafreshBlood;
+import net.fabricmc.example.items.Butchery;
+import net.fabricmc.example.items.KnowledgeTome;
+import net.fabricmc.example.items.PermafreshBlood;
 import net.minecraft.src.EntityVillager;
 import net.minecraft.src.Item;
 

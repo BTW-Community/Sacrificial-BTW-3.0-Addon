@@ -1,7 +1,6 @@
-package net.fabricmc.example;
+package net.fabricmc.example.items;
 
 import btw.item.BTWItems;
-import btw.item.items.PlaceAsBlockItem;
 import net.minecraft.src.*;
 
 public class SacrificialKnife extends ItemSword {

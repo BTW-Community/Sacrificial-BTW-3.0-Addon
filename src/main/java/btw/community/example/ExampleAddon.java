@@ -4,14 +4,22 @@ import btw.AddonHandler;
 import btw.BTWAddon;
 import btw.block.BTWBlocks;
 import btw.block.tileentity.WickerBasketTileEntity;
+import btw.client.render.entity.DireWolfRenderer;
 import btw.crafting.recipe.RecipeManager;
 import btw.entity.mob.villager.ButcherVillagerEntity;
 import btw.entity.mob.villager.FarmerVillagerEntity;
 import btw.entity.mob.villager.LibrarianVillagerEntity;
 import btw.entity.mob.villager.PriestVillagerEntity;
+import btw.entity.model.DireWolfModel;
 import btw.item.BTWItems;
 import btw.world.biome.BiomeDecoratorBase;
-import net.fabricmc.example.*;
+import net.fabricmc.example.blocks.BloodBush;
+import net.fabricmc.example.blocks.CrudeSacrificial;
+import net.fabricmc.example.blocks.Sacrificial;
+import net.fabricmc.example.entity.DemonHertraEntity;
+import net.fabricmc.example.entity.DemonHertraModel;
+import net.fabricmc.example.items.*;
+import net.fabricmc.example.render.DemonHertraRenderer;
 import net.minecraft.src.*;
 
 import java.util.Dictionary;
@@ -54,6 +62,10 @@ public class ExampleAddon extends BTWAddon {
         var bloodBottle = new BloodBottle(sacrificialId + 6);
 
         var sacrificialKnife = new SacrificialKnife(sacrificialKnifeId, EnumToolMaterial.SOULFORGED_STEEL);
+
+        EntityList.addMapping(DemonHertraEntity.class, "demonHertra", 666, 1, 3);
+        RenderManager.addEntityRenderer(DemonHertraEntity.class, new DemonHertraRenderer(new DemonHertraModel(), (ModelBase)null));
+
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialItem, 1), new Object[] {BTWBlocks.looseCobblestone, Block.dragonEgg});
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialKnife, 1), new Object[] {BTWItems.sharpStone, BTWItems.soulUrn});
         RecipeManager.addShapelessRecipe(new ItemStack(crudeSacrificialItem, 1), new Object[] {BTWBlocks.looseCobblestone, BTWBlocks.looseCobblestone});
