@@ -8,6 +8,7 @@ import java.util.Random;
 public class Sacrificial extends Block {
 	private int cooldown;
 	private boolean onCooldown;
+	private SacrificialModel model = new SacrificialModel();
 
 	public Sacrificial(int id, Material material)
 	{
@@ -15,6 +16,8 @@ public class Sacrificial extends Block {
 
 		this.setUnlocalizedName("nmIndustrialSacrificial");
 	}
+
+	public boolean isOpaqueCube() { return false; }
 
 	public int quantityDropped(Random rand) {
 		return 1;
@@ -79,4 +82,8 @@ public class Sacrificial extends Block {
 		}
 	}
 
+	public boolean renderBlock(RenderBlocks renderer, int x, int y, int z)
+	{
+		return model.makeTemporaryCopy().renderAsBlock(renderer, this, x, y, z);
+	}
 }

@@ -9,12 +9,15 @@ import java.util.Random;
 public class CrudeSacrificial extends Block {
 	private int cooldown;
 	private boolean onCooldown;
+	private SacrificialModel model = new SacrificialModel();
 
 	public CrudeSacrificial(int id, Material material) {
 		super(id, material);
 
 		this.setUnlocalizedName("nmCrudeSacrificial");
 	}
+
+	public boolean isOpaqueCube() { return false; }
 
 	public int quantityDropped(Random rand) {
 		return 1;
@@ -116,5 +119,10 @@ public class CrudeSacrificial extends Block {
 			if (random == 5)
 				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.bowDrill.itemID, 1, 0, 1);
 		}
+	}
+
+	public boolean renderBlock(RenderBlocks renderer, int x, int y, int z)
+	{
+		return model.makeTemporaryCopy().renderAsBlock(renderer, this, x, y, z);
 	}
 }
