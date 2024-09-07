@@ -17,6 +17,7 @@ public class DemonicCircle extends Block {
 		this.setUnlocalizedName("nmDemonicCircle");
 
 		this.initBlockBounds(0.0, 0.0, 0.0, 1.0, 0.0625, 1.0);
+		this.setTickRandomly(true);
 	}
 
 	public boolean isOpaqueCube() { return false; }
@@ -34,11 +35,26 @@ public class DemonicCircle extends Block {
 	}
 
 	public int quantityDropped(Random rand) {
-		return 1;
+		return 0;
 	}
 
-	public int idDropped(int iMetaData, Random random, int iFortuneModifier) {
-		return this.blockID;
+	public int tickRate(World par1World) {
+		return 100;
+	}
+
+	public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+	{
+		if (par1World.getBlockMetadata(par2, par3, par4) == 1)
+		{
+			par1World.setBlockMetadataWithNotify(par2, par3, par4, 0);
+
+			var demon = new DemonHertraEntity(par1World);
+			par1World.spawnEntityInWorld(demon);
+			demon.setLocationAndAngles(par2, par3 + 2, par4, 0, 0);
+
+			par1World.playSound(par2, par3, par4, "mob.ghast.scream", 1, 1);
+			par1World.spawnParticle("hugeexplosion", par2, par3, par4, 0.0, 0.0, 0.0);
+		}
 	}
 
 	@Override
@@ -51,6 +67,9 @@ public class DemonicCircle extends Block {
 
 	@Override
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
+		if (par1World.getBlockMetadata(par2, par3, par4) == 1)
+			return false;
+
 		var heldItem = par5EntityPlayer.getHeldItem();
 		if (heldItem.itemID != Item.porkRaw.itemID &&
 				heldItem.itemID != Item.beefRaw.itemID
@@ -63,9 +82,7 @@ public class DemonicCircle extends Block {
 
 		if (heldItem.itemID == Item.porkRaw.itemID)
 		{
-			var demon = new DemonHertraEntity(par1World);
-			par1World.spawnEntityInWorld(demon);
-			demon.setLocationAndAngles(par2, par3 + 4, par4, 0, 0);
+			par1World.setBlockMetadataWithNotify(par2, par3, par4, 1);
 		}
 
 		--heldItem.stackSize;

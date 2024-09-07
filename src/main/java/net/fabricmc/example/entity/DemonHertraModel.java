@@ -17,8 +17,9 @@ public class DemonHertraModel extends ModelBase {
 	{
 		super();
 		this.modelBody = new ModelRenderer(this, 0, 0);
-		this.modelBody.addBox(-5, -10, -5, 10, 10, 10);
-		this.modelBody.addBox(-7, 0, -7, 14, 20, 14);
+		this.modelBody.addBox(-4, -15, -4, 8, 8, 8);
+		this.modelBody.addBox(-7, -5, -7, 14, 20, 14);
+		this.modelBody.addBox(-5, 2, -5, 10, 20, 10);
 	}
 
 

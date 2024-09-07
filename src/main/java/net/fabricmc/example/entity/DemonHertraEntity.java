@@ -13,7 +13,7 @@ public class DemonHertraEntity extends EntityMob {
 	{
 		super(world);
 
-		this.setSize(1, 2);
+		this.setSize(1, 2.5f);
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIAttackOnCollide(this, EntityPlayer.class, 2.0, false));
 		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true, false, (IEntitySelector)null, false));
