@@ -2,6 +2,7 @@ package net.fabricmc.example.blocks;
 
 import btw.item.BTWItems;
 import net.fabricmc.example.entity.DemonHertraEntity;
+import net.fabricmc.example.entity.DemonPandaEntity;
 import net.minecraft.src.*;
 import net.minecraft.src.BlockRedstoneWire;
 import net.minecraft.src.EntityDragon;
@@ -10,6 +11,9 @@ import java.util.Random;
 
 public class DemonicCircle extends Block {
 	private DemonicCircleModel model = new DemonicCircleModel();
+
+	private Icon Fed;
+	private Icon Unfed;
 
 	public DemonicCircle(int id, Material material) {
 		super(id, material);
@@ -39,22 +43,33 @@ public class DemonicCircle extends Block {
 	}
 
 	public int tickRate(World par1World) {
-		return 100;
+		return 1;
 	}
 
 	public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
 	{
-		if (par1World.getBlockMetadata(par2, par3, par4) == 1)
+		var metadata = par1World.getBlockMetadata(par2, par3, par4);
+		if (metadata == 1)
 		{
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 0);
-
 			var demon = new DemonHertraEntity(par1World);
 			par1World.spawnEntityInWorld(demon);
 			demon.setLocationAndAngles(par2, par3 + 2, par4, 0, 0);
 
-			par1World.playSound(par2, par3, par4, "mob.ghast.scream", 1, 1);
+			par1World.playSound(par2, par3, par4, "mob.ghast.scream", 2, 1);
 			par1World.spawnParticle("hugeexplosion", par2, par3, par4, 0.0, 0.0, 0.0);
 		}
+		else if (metadata == 2)
+		{
+
+			var demon = new DemonPandaEntity(par1World);
+			par1World.spawnEntityInWorld(demon);
+			demon.setLocationAndAngles(par2, par3 + 2, par4, 0, 0);
+
+			par1World.playSound(par2, par3, par4, "mob.ghast.scream", 2, 1);
+			par1World.spawnParticle("hugeexplosion", par2, par3, par4, 0.0, 0.0, 0.0);
+		}
+
+		par1World.setBlockMetadataWithNotify(par2, par3, par4, 0);
 	}
 
 	@Override
@@ -84,6 +99,10 @@ public class DemonicCircle extends Block {
 		{
 			par1World.setBlockMetadataWithNotify(par2, par3, par4, 1);
 		}
+		if (heldItem.itemID == Item.beefRaw.itemID)
+		{
+			par1World.setBlockMetadataWithNotify(par2, par3, par4, 2);
+		}
 
 		--heldItem.stackSize;
 
@@ -93,5 +112,24 @@ public class DemonicCircle extends Block {
 	public boolean renderBlock(RenderBlocks renderer, int x, int y, int z)
 	{
 		return model.makeTemporaryCopy().renderAsBlock(renderer, this, x, y, z);
+	}
+
+	public void registerIcons(IconRegister par1IconRegister)
+	{
+		super.registerIcons(par1IconRegister);
+		Fed = par1IconRegister.registerIcon("nmDemonicCircleFed");
+		Unfed = par1IconRegister.registerIcon("nmDemonicCircle");
+	}
+
+	public Icon getBlockTexture(IBlockAccess blockAccess, int i, int j, int k, int iSide)
+	{
+		if (blockAccess.getBlockMetadata(i, j, k) != 0)
+		{
+			return Fed;
+		}
+		else
+		{
+			return Unfed;
+		}
 	}
 }

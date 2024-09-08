@@ -19,8 +19,11 @@ import net.fabricmc.example.blocks.DemonicCircle;
 import net.fabricmc.example.blocks.Sacrificial;
 import net.fabricmc.example.entity.DemonHertraEntity;
 import net.fabricmc.example.entity.DemonHertraModel;
+import net.fabricmc.example.entity.DemonPandaEntity;
+import net.fabricmc.example.entity.DemonPandaModel;
 import net.fabricmc.example.items.*;
 import net.fabricmc.example.render.DemonHertraRenderer;
+import net.fabricmc.example.render.DemonPandaRenderer;
 import net.minecraft.src.*;
 
 import java.util.Dictionary;
@@ -68,7 +71,9 @@ public class ExampleAddon extends BTWAddon {
         new DemonicCircleItem(sacrificialId + 7, sacrificialId + 7);
 
         EntityList.addMapping(DemonHertraEntity.class, "demonHertra", 666, 1, 3);
+        EntityList.addMapping(DemonPandaEntity.class, "demonPanda", 667, 1, 100);
         RenderManager.addEntityRenderer(DemonHertraEntity.class, new DemonHertraRenderer(new DemonHertraModel(), null));
+        RenderManager.addEntityRenderer(DemonPandaEntity.class, new DemonPandaRenderer(new DemonPandaModel(), null));
 
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialItem, 1), new Object[] {BTWBlocks.looseCobblestone, Block.dragonEgg});
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialKnife, 1), new Object[] {BTWItems.sharpStone, BTWItems.soulUrn});
