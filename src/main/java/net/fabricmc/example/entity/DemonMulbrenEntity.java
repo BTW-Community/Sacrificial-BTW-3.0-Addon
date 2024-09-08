@@ -1,37 +1,35 @@
 package net.fabricmc.example.entity;
 
 import btw.entity.mob.behavior.SimpleWanderBehavior;
-import btw.item.BTWItems;
-import net.fabricmc.example.items.AttackTome;
-import net.minecraft.src.EntityGhast;
-import net.minecraft.src.EntityZombie;
 import net.minecraft.src.*;
+import net.minecraft.src.EntityZombie;
 
-public class DemonHertraEntity extends EntityMob {
+public class DemonMulbrenEntity extends EntityMob {
 	private IEntitySelector targetEntitySelector;
 	private final float moveSpeed = 0.2f;
 
-	public DemonHertraEntity(World world)
+	public DemonMulbrenEntity(World world)
 	{
 		super(world);
 
-		this.setSize(1, 2.5f);
+		this.setSize(1.5f, 1f);
 		this.tasks.addTask(0, new EntityAISwimming(this));
+		this.tasks.addTask(1, new SimpleWanderBehavior(this, moveSpeed));
 		this.tasks.addTask(1, new EntityAIAttackOnCollide(this, EntityPlayer.class, 2.0, false));
 		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true, false, (IEntitySelector)null, false));
-		this.tasks.addTask(2, new SimpleWanderBehavior(this, moveSpeed));
+
 	}
 
 	public int getDropItemId() {
-		return 777;
+		return 778;
 	}
 
 	public void applyEntityAttributes()
 	{
 		super.applyEntityAttributes();
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(moveSpeed);
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(200);
-		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(7.0);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(250);
+		//this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(7.0);
 	}
 
 	public boolean isAIEnabled(){ return true; }

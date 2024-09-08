@@ -2,6 +2,7 @@ package net.fabricmc.example.blocks;
 
 import btw.item.BTWItems;
 import net.fabricmc.example.entity.DemonHertraEntity;
+import net.fabricmc.example.entity.DemonMulbrenEntity;
 import net.fabricmc.example.entity.DemonPandaEntity;
 import net.minecraft.src.*;
 import net.minecraft.src.BlockRedstoneWire;
@@ -68,7 +69,16 @@ public class DemonicCircle extends Block {
 			par1World.playSound(par2, par3, par4, "mob.ghast.scream", 2, 1);
 			par1World.spawnParticle("hugeexplosion", par2, par3, par4, 0.0, 0.0, 0.0);
 		}
+		else if (metadata == 3)
+		{
 
+			var demon = new DemonMulbrenEntity(par1World);
+			par1World.spawnEntityInWorld(demon);
+			demon.setLocationAndAngles(par2, par3 + 2, par4, 0, 0);
+
+			par1World.playSound(par2, par3, par4, "mob.ghast.scream", 2, 1);
+			par1World.spawnParticle("hugeexplosion", par2, par3, par4, 0.0, 0.0, 0.0);
+		}
 		par1World.setBlockMetadataWithNotify(par2, par3, par4, 0);
 	}
 
@@ -87,7 +97,8 @@ public class DemonicCircle extends Block {
 
 		var heldItem = par5EntityPlayer.getHeldItem();
 		if (heldItem.itemID != Item.porkRaw.itemID &&
-				heldItem.itemID != Item.beefRaw.itemID
+				heldItem.itemID != Item.beefRaw.itemID &&
+				heldItem.itemID != BTWItems.rawMutton.itemID
 		) {
 			return false;
 		}
@@ -102,6 +113,10 @@ public class DemonicCircle extends Block {
 		if (heldItem.itemID == Item.beefRaw.itemID)
 		{
 			par1World.setBlockMetadataWithNotify(par2, par3, par4, 2);
+		}
+		if (heldItem.itemID == BTWItems.rawMutton.itemID)
+		{
+			par1World.setBlockMetadataWithNotify(par2, par3, par4, 3);
 		}
 
 		--heldItem.stackSize;

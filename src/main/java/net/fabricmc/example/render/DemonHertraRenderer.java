@@ -7,7 +7,7 @@ import net.minecraft.src.RenderLiving;
 import net.minecraft.src.ResourceLocation;
 
 public class DemonHertraRenderer extends RenderLiving {
-	private static final ResourceLocation WOLF_DIRE_TEXTURES = new ResourceLocation("minecraft:textures/entity/demonHertra.png");
+	private static final ResourceLocation TEXTURES = new ResourceLocation("minecraft:textures/entity/demonHertra.png");
 
 	public DemonHertraRenderer(ModelBase model, ModelBase renderPassModel) {
 		super(model, 1F);
@@ -19,7 +19,7 @@ public class DemonHertraRenderer extends RenderLiving {
 	}
 
 	protected ResourceLocation getEntityTexture(Entity var1) {
-		return WOLF_DIRE_TEXTURES;
+		return TEXTURES;
 	}
 
 }

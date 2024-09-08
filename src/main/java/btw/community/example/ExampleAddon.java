@@ -17,12 +17,10 @@ import net.fabricmc.example.blocks.BloodBush;
 import net.fabricmc.example.blocks.CrudeSacrificial;
 import net.fabricmc.example.blocks.DemonicCircle;
 import net.fabricmc.example.blocks.Sacrificial;
-import net.fabricmc.example.entity.DemonHertraEntity;
-import net.fabricmc.example.entity.DemonHertraModel;
-import net.fabricmc.example.entity.DemonPandaEntity;
-import net.fabricmc.example.entity.DemonPandaModel;
+import net.fabricmc.example.entity.*;
 import net.fabricmc.example.items.*;
 import net.fabricmc.example.render.DemonHertraRenderer;
+import net.fabricmc.example.render.DemonMulbrenRenderer;
 import net.fabricmc.example.render.DemonPandaRenderer;
 import net.minecraft.src.*;
 
@@ -72,8 +70,10 @@ public class ExampleAddon extends BTWAddon {
 
         EntityList.addMapping(DemonHertraEntity.class, "demonHertra", 666, 1, 3);
         EntityList.addMapping(DemonPandaEntity.class, "demonPanda", 667, 1, 100);
+        EntityList.addMapping(DemonMulbrenEntity.class, "demonMulbren", 668, 1, 100);
         RenderManager.addEntityRenderer(DemonHertraEntity.class, new DemonHertraRenderer(new DemonHertraModel(), null));
         RenderManager.addEntityRenderer(DemonPandaEntity.class, new DemonPandaRenderer(new DemonPandaModel(), null));
+        RenderManager.addEntityRenderer(DemonMulbrenEntity.class, new DemonMulbrenRenderer(new DemonMulbrenModel(), null));
 
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialItem, 1), new Object[] {BTWBlocks.looseCobblestone, Block.dragonEgg});
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialKnife, 1), new Object[] {BTWItems.sharpStone, BTWItems.soulUrn});
@@ -5999,7 +5999,7 @@ public class ExampleAddon extends BTWAddon {
         }
         if (type == 4)
         {
-            var randomLoot = rand.nextInt(1, 6);
+            var randomLoot = rand.nextInt(1, 7);
 
             if (randomLoot == 1)
                 loot = new ItemStack(BTWItems.porkDinner, 3);
@@ -6010,12 +6010,8 @@ public class ExampleAddon extends BTWAddon {
             if (randomLoot == 4)
                 loot = new ItemStack(Item.beefRaw, 5);
             if (randomLoot == 5)
-                loot = new ItemStack(Item.leather, 4);
+                loot = new ItemStack(Item.glassBottle, 4);
             if (randomLoot == 6)
-                loot = new ItemStack(Item.egg, 6);
-            if (randomLoot == 7)
-                loot = new ItemStack(Item.appleRed, 5);
-            if (randomLoot == 5)
                 loot = new ItemStack(Item.appleGold, 1);
         }
 

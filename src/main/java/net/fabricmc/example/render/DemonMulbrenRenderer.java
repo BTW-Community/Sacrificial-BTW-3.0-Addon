@@ -5,10 +5,10 @@ import net.minecraft.src.ModelBase;
 import net.minecraft.src.RenderLiving;
 import net.minecraft.src.ResourceLocation;
 
-public class DemonPandaRenderer extends RenderLiving {
-	private static final ResourceLocation TEXTURES = new ResourceLocation("minecraft:textures/entity/demonPanda.png");
+public class DemonMulbrenRenderer extends RenderLiving {
+	private static final ResourceLocation TEXTURES = new ResourceLocation("minecraft:textures/entity/demonMulbren.png");
 
-	public DemonPandaRenderer(ModelBase model, ModelBase renderPassModel) {
+	public DemonMulbrenRenderer(ModelBase model, ModelBase renderPassModel) {
 		super(model, 1F);
 		this.setRenderPassModel(model);
 	}
