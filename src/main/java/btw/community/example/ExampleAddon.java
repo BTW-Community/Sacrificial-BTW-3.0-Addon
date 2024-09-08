@@ -66,7 +66,7 @@ public class ExampleAddon extends BTWAddon {
         var sacrificialKnife = new SacrificialKnife(sacrificialKnifeId, EnumToolMaterial.SOULFORGED_STEEL);
 
         new DemonicCircle(sacrificialId + 7, Material.redstoneLight);
-        new DemonicCircleItem(sacrificialId + 7, sacrificialId + 7);
+        var demonicCircleItem = new DemonicCircleItem(sacrificialId + 7, sacrificialId + 7);
 
         EntityList.addMapping(DemonHertraEntity.class, "demonHertra", 666, 1, 3);
         EntityList.addMapping(DemonPandaEntity.class, "demonPanda", 667, 1, 100);
@@ -87,6 +87,7 @@ public class ExampleAddon extends BTWAddon {
         RecipeManager.addShapelessRecipeWithSecondaryOutputIndicator(new ItemStack(Item.monsterPlacer, 1, 95), new ItemStack(Item.glassBottle), new Object[] {bloodBottle, BTWItems.soulUrn, BTWItems.rawWolfChop });
         RecipeManager.addShapelessRecipeWithSecondaryOutputIndicator(new ItemStack(Item.monsterPlacer, 1, 100), new ItemStack(Item.glassBottle), new Object[] {bloodBottle, BTWItems.soulUrn, BTWItems.rawCheval });
         RecipeManager.addShapelessRecipeWithSecondaryOutputIndicator(new ItemStack(Item.monsterPlacer, 1, 96), new ItemStack(Item.glassBottle), new Object[] {bloodBottle, BTWItems.soulUrn, BTWItems.redMushroom });
+        RecipeManager.addShapelessRecipeWithSecondaryOutputIndicator(new ItemStack(demonicCircleItem), new ItemStack(Item.glassBottle), new Object[] {bloodBottle});
 
         RecipeManager.addShapelessRecipeWithSecondaryOutputIndicator(new ItemStack(Item.monsterPlacer, 1, 602), new ItemStack(Item.glassBottle), new Object[] {bloodBottle, BTWItems.soulUrn, BTWItems.rawMysteryMeat });
 
@@ -6002,7 +6003,7 @@ public class ExampleAddon extends BTWAddon {
             var randomLoot = rand.nextInt(1, 7);
 
             if (randomLoot == 1)
-                loot = new ItemStack(BTWItems.porkDinner, 3);
+                loot = new ItemStack(BTWItems.diamondArmorPlate, 2);
             if (randomLoot == 2)
                 loot = new ItemStack(BTWItems.steakDinner, 2);
             if (randomLoot == 3)
