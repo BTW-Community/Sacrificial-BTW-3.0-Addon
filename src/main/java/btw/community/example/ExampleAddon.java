@@ -19,6 +19,7 @@ import net.fabricmc.example.blocks.DemonicCircle;
 import net.fabricmc.example.blocks.Sacrificial;
 import net.fabricmc.example.entity.*;
 import net.fabricmc.example.items.*;
+import net.fabricmc.example.render.DeaconRenderer;
 import net.fabricmc.example.render.DemonHertraRenderer;
 import net.fabricmc.example.render.DemonMulbrenRenderer;
 import net.fabricmc.example.render.DemonPandaRenderer;
@@ -68,12 +69,14 @@ public class ExampleAddon extends BTWAddon {
         new DemonicCircle(sacrificialId + 7, Material.redstoneLight);
         var demonicCircleItem = new DemonicCircleItem(sacrificialId + 7, sacrificialId + 7);
 
-        EntityList.addMapping(DemonHertraEntity.class, "demonHertra", 666, 1, 3);
+        EntityList.addMapping(DemonHertraEntity.class, "demonHertra", 666, 1, 100);
         EntityList.addMapping(DemonPandaEntity.class, "demonPanda", 667, 1, 100);
         EntityList.addMapping(DemonMulbrenEntity.class, "demonMulbren", 668, 1, 100);
+        EntityList.addMapping(DeaconEntity.class, "deacon", 669, 1, 200);
         RenderManager.addEntityRenderer(DemonHertraEntity.class, new DemonHertraRenderer(new DemonHertraModel(), null));
         RenderManager.addEntityRenderer(DemonPandaEntity.class, new DemonPandaRenderer(new DemonPandaModel(), null));
         RenderManager.addEntityRenderer(DemonMulbrenEntity.class, new DemonMulbrenRenderer(new DemonMulbrenModel(), null));
+        RenderManager.addEntityRenderer(DeaconEntity.class, new DeaconRenderer(new DeaconModel(), null));
 
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialItem, 1), new Object[] {BTWBlocks.looseCobblestone, Block.dragonEgg});
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialKnife, 1), new Object[] {BTWItems.sharpStone, BTWItems.soulUrn});

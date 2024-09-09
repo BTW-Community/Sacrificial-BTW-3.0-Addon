@@ -20,8 +20,10 @@ public class DemonMulbrenEntity extends EntityMob {
 
 	}
 
-	public int getDropItemId() {
-		return 778;
+	protected void dropFewItems(boolean bKilledByPlayer, int iLootingLevel) {
+		super.dropFewItems(bKilledByPlayer, iLootingLevel);
+		this.dropItem(777, this.rand.nextInt(1, 3));
+		this.dropItem(778, this.rand.nextInt(1, 3));
 	}
 
 	public void applyEntityAttributes()

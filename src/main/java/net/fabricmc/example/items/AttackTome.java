@@ -16,7 +16,7 @@ public class AttackTome extends Item {
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
-		var arrow = new EntityArrow(world, player, 7);
+		var arrow = new EntityArrow(world, player, 3);
 		arrow.setFire(60);
 		world.spawnEntityInWorld(arrow);
 		arrow.playSound("mob.ghast.fireball", 1, 1);
