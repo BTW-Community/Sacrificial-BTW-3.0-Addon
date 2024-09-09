@@ -13,7 +13,7 @@ public class NewVillagerTrades {
         var profession = 0;
         {
             EntityVillager.removeLevelUpTrade(profession, 1);
-            TradeProvider.getBuilder().profession(profession).level(1).buy().item(BTWItems.dirtPile.itemID, 15).emeraldCost(1, 1).mandatory().addToTradeList();
+            TradeProvider.getBuilder().profession(profession).level(1).buy().item(BTWItems.dirtPile.itemID, 15).itemCount(15, 9).mandatory().addToTradeList();
             TradeProvider.getBuilder().profession(profession).level(1).buy().item(BTWItems.carrot.itemID, 2).emeraldCost(2, 1).mandatory().addToTradeList();
             TradeProvider.getBuilder().profession(profession).level(1).buy().item(BTWItems.bowDrill.itemID, 1).emeraldCost(2, 1).mandatory().addAsLevelUpTrade();
             TradeProvider.getBuilder().profession(profession).level(1).buy().item(BTWItems.creeperOysters.itemID, 3).emeraldCost(1, 1).mandatory().addToTradeList();

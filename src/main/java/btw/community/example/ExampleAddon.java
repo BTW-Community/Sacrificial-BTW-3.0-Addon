@@ -60,7 +60,7 @@ public class ExampleAddon extends BTWAddon {
 
         new BloodBush(sacrificialId + 4, Material.leaves);
         new BloodBushItem(sacrificialId + 4, sacrificialId + 4);
-        var bloodBerries = new BloodBerries(sacrificialId + 5, 1, 1f, false);
+        var bloodBerries = new BloodBerries(sacrificialId + 5, 1, 0.25f, false);
         var bloodBottle = new BloodBottle(sacrificialId + 6);
 
         var sacrificialKnife = new SacrificialKnife(sacrificialKnifeId, EnumToolMaterial.SOULFORGED_STEEL);
@@ -6014,6 +6014,10 @@ public class ExampleAddon extends BTWAddon {
                 loot = new ItemStack(Item.glassBottle, 4);
             if (randomLoot == 6)
                 loot = new ItemStack(Item.appleGold, 1);
+            if (randomLoot == 7)
+                loot = new ItemStack(BTWItems.diamondIngot, 2);
+            if (randomLoot == 8)
+                loot = new ItemStack(BTWItems.clayPile, 32);
         }
 
         if (type == 5)

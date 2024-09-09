@@ -22,6 +22,10 @@ public class BloodBush extends Block {
 		this.setTickRandomly(true);
 	}
 
+	public int tickRate(World par1World) {
+		return 100;
+	}
+
 	public int quantityDropped(Random rand) {
 		return 1;
 	}
