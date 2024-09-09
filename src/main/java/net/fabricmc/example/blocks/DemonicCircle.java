@@ -43,9 +43,9 @@ public class DemonicCircle extends Block {
 		return 0;
 	}
 
-	public int tickRate(World par1World) {
-		return 1;
-	}
+	//public int tickRate(World par1World) {
+	//	return 10;
+	//}
 
 	public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
 	{

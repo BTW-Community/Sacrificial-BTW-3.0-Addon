@@ -93,7 +93,9 @@ public class CrudeSacrificial extends Block {
 			var random = rand.nextInt(1, 5);
 
 			if (random == 1)
-				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.diamondIngot.itemID, 1, 0, 1);
+				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.diamondIngot.itemID, 1, 0, 3);
+			if (random == 1)
+				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.diamondArmorPlate.itemID, 1, 0, 2);
 			if (random == 2)
 				dropItemsIndividually(par1World, par2, par3, par4, Item.plateDiamond.itemID, 1, 500, 1);
 			if (random == 3)
