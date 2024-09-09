@@ -6,7 +6,7 @@ import net.fabricmc.example.entity.DemonMulbrenEntity;
 import net.fabricmc.example.entity.DemonPandaEntity;
 import net.minecraft.src.*;
 import net.minecraft.src.BlockRedstoneWire;
-import net.minecraft.src.EntityDragon;
+import net.minecraft.src.BlockMobSpawner;
 
 import java.util.Random;
 
@@ -47,41 +47,6 @@ public class DemonicCircle extends Block {
 	//	return 10;
 	//}
 
-	public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
-	{
-		var metadata = par1World.getBlockMetadata(par2, par3, par4);
-		if (metadata == 1)
-		{
-			var demon = new DemonHertraEntity(par1World);
-			par1World.spawnEntityInWorld(demon);
-			demon.setLocationAndAngles(par2, par3 + 2, par4, 0, 0);
-
-			par1World.playSound(par2, par3, par4, "mob.ghast.scream", 2, 1);
-			par1World.spawnParticle("hugeexplosion", par2, par3, par4, 0.0, 0.0, 0.0);
-		}
-		else if (metadata == 2)
-		{
-
-			var demon = new DemonPandaEntity(par1World);
-			par1World.spawnEntityInWorld(demon);
-			demon.setLocationAndAngles(par2, par3 + 2, par4, 0, 0);
-
-			par1World.playSound(par2, par3, par4, "mob.ghast.scream", 2, 1);
-			par1World.spawnParticle("hugeexplosion", par2, par3, par4, 0.0, 0.0, 0.0);
-		}
-		else if (metadata == 3)
-		{
-
-			var demon = new DemonMulbrenEntity(par1World);
-			par1World.spawnEntityInWorld(demon);
-			demon.setLocationAndAngles(par2, par3 + 2, par4, 0, 0);
-
-			par1World.playSound(par2, par3, par4, "mob.ghast.scream", 2, 1);
-			par1World.spawnParticle("hugeexplosion", par2, par3, par4, 0.0, 0.0, 0.0);
-		}
-		par1World.setBlockMetadataWithNotify(par2, par3, par4, 0);
-	}
-
 	@Override
 	public float getExplosionResistance(Entity entity, World world, int i, int j, int k)
 	{
@@ -92,10 +57,48 @@ public class DemonicCircle extends Block {
 
 	@Override
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
-		if (par1World.getBlockMetadata(par2, par3, par4) == 1)
+		var metadata = par1World.getBlockMetadata(par2, par3, par4);
+		if (metadata == 1)
+		{
+			var demon = new DemonHertraEntity(par1World);
+			demon.preInitCreature();
+			demon.setLocationAndAngles(par2, par3 + 5, par4, 0, 0);
+			par1World.spawnEntityInWorld(demon);
+
+			par1World.playSound(par2, par3, par4, "mob.ghast.scream", 2, 1);
+			par1World.spawnParticle("hugeexplosion", par2, par3, par4, 0.0, 0.0, 0.0);
+		}
+		else if (metadata == 2)
+		{
+
+			var demon = new DemonPandaEntity(par1World);
+			demon.preInitCreature();
+			demon.setLocationAndAngles(par2, par3 + 5, par4, 0, 0);
+			par1World.spawnEntityInWorld(demon);
+
+			par1World.playSound(par2, par3, par4, "mob.ghast.scream", 2, 1);
+			par1World.spawnParticle("hugeexplosion", par2, par3, par4, 0.0, 0.0, 0.0);
+		}
+		else if (metadata == 3)
+		{
+
+			var demon = new DemonMulbrenEntity(par1World);
+			demon.preInitCreature();
+			demon.setLocationAndAngles(par2, par3 + 5, par4, 0, 0);
+			par1World.spawnEntityInWorld(demon);
+
+			par1World.playSound(par2, par3, par4, "mob.ghast.scream", 2, 1);
+			par1World.spawnParticle("hugeexplosion", par2, par3, par4, 0.0, 0.0, 0.0);
+		}
+		par1World.setBlockMetadataWithNotify(par2, par3, par4, 0);
+
+		if (metadata != 0)
 			return false;
 
 		var heldItem = par5EntityPlayer.getHeldItem();
+		if (heldItem == null)
+			return false;
+
 		if (heldItem.itemID != Item.porkRaw.itemID &&
 				heldItem.itemID != Item.beefRaw.itemID &&
 				heldItem.itemID != BTWItems.rawMutton.itemID
