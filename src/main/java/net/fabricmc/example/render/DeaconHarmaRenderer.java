@@ -5,10 +5,10 @@ import net.minecraft.src.ModelBase;
 import net.minecraft.src.RenderLiving;
 import net.minecraft.src.ResourceLocation;
 
-public class DeaconRenderer extends RenderLiving {
-	private static final ResourceLocation TEXTURES = new ResourceLocation("minecraft:textures/entity/deacon.png");
+public class DeaconHarmaRenderer extends RenderLiving {
+	private static final ResourceLocation TEXTURES = new ResourceLocation("minecraft:textures/entity/deaconHarma.png");
 
-	public DeaconRenderer(ModelBase model, ModelBase renderPassModel) {
+	public DeaconHarmaRenderer(ModelBase model, ModelBase renderPassModel) {
 		super(model, 1F);
 		this.setRenderPassModel(model);
 	}

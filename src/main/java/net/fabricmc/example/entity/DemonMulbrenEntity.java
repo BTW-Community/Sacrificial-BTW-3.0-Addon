@@ -1,12 +1,13 @@
 package net.fabricmc.example.entity;
 
 import btw.entity.mob.behavior.SimpleWanderBehavior;
+import btw.item.BTWItems;
 import net.minecraft.src.*;
 import net.minecraft.src.EntityZombie;
 
 public class DemonMulbrenEntity extends EntityMob {
 	private IEntitySelector targetEntitySelector;
-	private final float moveSpeed = 0.2f;
+	private final float moveSpeed = 0.3f;
 
 	public DemonMulbrenEntity(World world)
 	{
@@ -23,7 +24,7 @@ public class DemonMulbrenEntity extends EntityMob {
 	protected void dropFewItems(boolean bKilledByPlayer, int iLootingLevel) {
 		super.dropFewItems(bKilledByPlayer, iLootingLevel);
 		this.dropItem(777, this.rand.nextInt(1, 3));
-		this.dropItem(778, this.rand.nextInt(1, 3));
+		this.dropItem(BTWItems.soulforgedSteelIngot.itemID, 1);
 	}
 
 	public void applyEntityAttributes()

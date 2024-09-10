@@ -70,6 +70,7 @@ public class NewVillagerTrades {
             TradeProvider.getBuilder().profession(profession).level(2).buy().item(BTWItems.boiledPotato.itemID, 4).emeraldCost(1, 1).mandatory().addToTradeList();
             TradeProvider.getBuilder().profession(profession).level(2).buy().item(Item.book.itemID, 1).emeraldCost(1, 2).mandatory().mandatory().addAsLevelUpTrade();
             EntityVillager.removeLevelUpTrade(profession, 3);
+            TradeProvider.getBuilder().profession(profession).level(3).buy().item(Item.book.itemID, 1).emeraldCost(1, 2).addToTradeList();
             TradeProvider.getBuilder().profession(profession).level(3).buy().item(p.itemID, 4).emeraldCost(15, 20).mandatory().mandatory().addAsLevelUpTrade();
             EntityVillager.removeLevelUpTrade(profession, 4);
             TradeProvider.getBuilder().profession(profession).level(4).sell().item(Item.appleGold.itemID, 1).emeraldCost(2, 3).mandatory().addToTradeList();

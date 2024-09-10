@@ -5,23 +5,17 @@
 
 package net.fabricmc.example.entity;
 
-import btw.entity.mob.behavior.SimpleWanderBehavior;
-import btw.entity.model.DireWolfModel;
-import btw.client.render.entity.DireWolfRenderer;
-import net.minecraft.src.ModelGhast;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.src.*;
 
 
-public class DeaconModel extends ModelBase {
+public class DeaconHarmaModel extends ModelBase {
 	private final ModelRenderer torso;
 	private final ModelRenderer cube_r1;
 	private final ModelRenderer head;
 	private final ModelRenderer cube_r2;
 	private final ModelRenderer cube_r3;
 
-	public DeaconModel() {
+	public DeaconHarmaModel() {
 		textureWidth = 256;
 		textureHeight = 256;
 
@@ -80,7 +74,8 @@ public class DeaconModel extends ModelBase {
 	 */
 	@Override
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
-
+		head.rotateAngleX = f3 / 57;
+		head.rotateAngleY = f4 / 57;
 	}
 
 	/**
