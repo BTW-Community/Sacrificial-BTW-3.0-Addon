@@ -62,7 +62,7 @@ public class ExampleAddon extends BTWAddon {
         var bloodBerries = new BloodBerries(sacrificialId + 5, 1, 0.25f, false);
         var bloodBottle = new BloodBottle(sacrificialId + 6);
 
-        var sacrificialKnife = new SacrificialKnife(sacrificialKnifeId, EnumToolMaterial.SOULFORGED_STEEL);
+        var sacrificialKnife = new SacrificialKnife(sacrificialKnifeId);
 
         new DemonicCircle(sacrificialId + 7, Material.redstoneLight);
         var demonicCircleItem = new DemonicCircleItem(sacrificialId + 7, sacrificialId + 7);
@@ -5924,7 +5924,7 @@ public class ExampleAddon extends BTWAddon {
             var randomLoot = rand.nextInt(1, 7);
 
             if (randomLoot == 1)
-                loot = new ItemStack(BTWItems.dung, 2);
+                loot = new ItemStack(BTWItems.diamondArmorPlate, 2);
             if (randomLoot == 2)
                 loot = new ItemStack(Item.stick, 3);
             if (randomLoot == 3)

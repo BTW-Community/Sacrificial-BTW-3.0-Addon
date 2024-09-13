@@ -47,7 +47,8 @@ public class DeaconHarmaEntity extends EntityMob {
 
 	protected void dropFewItems(boolean bKilledByPlayer, int iLootingLevel) {
 		super.dropFewItems(bKilledByPlayer, iLootingLevel);
-		this.dropItem(668, 1);
+		if (rand.nextInt(0, 10) == 1)
+			this.dropItem(668, 1);
 		this.dropItem(777, 3);
 		this.dropItem(778, 3);
 		this.dropItem(BTWItems.soulforgedSteelIngot.itemID, 3);
@@ -60,7 +61,7 @@ public class DeaconHarmaEntity extends EntityMob {
 	{
 		super.applyEntityAttributes();
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(moveSpeed);
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(400);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(700);
 		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(7.0);
 		this.getEntityAttribute(SharedMonsterAttributes.followRange).setAttribute(200.0);
 	}
