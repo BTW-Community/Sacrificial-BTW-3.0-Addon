@@ -25,7 +25,8 @@ public class DemonHertraEntity extends EntityMob {
 	protected void dropFewItems(boolean bKilledByPlayer, int iLootingLevel) {
 		super.dropFewItems(bKilledByPlayer, iLootingLevel);
 		this.dropItem(777, this.rand.nextInt(1, 3));
-		this.dropItem(BTWItems.soulforgedSteelIngot.itemID, 1);
+		if (this.rand.nextInt(1, 10) == 1)
+			this.dropItem(BTWItems.soulforgedSteelIngot.itemID, 1);
 	}
 
 	public void applyEntityAttributes()

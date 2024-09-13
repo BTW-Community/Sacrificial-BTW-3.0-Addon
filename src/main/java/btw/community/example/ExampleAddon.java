@@ -103,7 +103,6 @@ public class ExampleAddon extends BTWAddon {
 
     @Override
     public void decorateWorld(BiomeDecoratorBase decorator, World world, Random rand, int x, int y, BiomeGenBase biome) {
-
         ++x;
         ++y;
         //if (!world.doChunksNearChunkExist(x, 60, y, 1))

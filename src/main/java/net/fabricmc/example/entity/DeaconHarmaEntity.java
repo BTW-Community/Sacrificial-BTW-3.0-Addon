@@ -47,11 +47,10 @@ public class DeaconHarmaEntity extends EntityMob {
 
 	protected void dropFewItems(boolean bKilledByPlayer, int iLootingLevel) {
 		super.dropFewItems(bKilledByPlayer, iLootingLevel);
-		if (rand.nextInt(0, 10) == 1)
-			this.dropItem(668, 1);
+		this.dropItem(668, 1);
 		this.dropItem(777, 3);
 		this.dropItem(778, 3);
-		this.dropItem(BTWItems.soulforgedSteelIngot.itemID, 3);
+		this.dropItem(BTWItems.soulforgedSteelIngot.itemID, rand.nextInt(1, 3));
 		this.dropItem(BTWItems.padding.itemID, 2);
 		this.dropItem(BTWItems.leatherStrap.itemID, 4);
 
