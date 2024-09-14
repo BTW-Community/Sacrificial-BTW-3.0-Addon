@@ -274,7 +274,7 @@ public class ExampleAddon extends BTWAddon {
 
         for(var i = 100; i >= 0; --i)
         {
-            if (world.isBlockOpaqueCube(x1, i, z1))
+            if (world.isBlockOpaqueCube(x1, i, z1) || world.isAirBlock(x1, i, z1))
             {
                 lastAirBlock = i;
             }

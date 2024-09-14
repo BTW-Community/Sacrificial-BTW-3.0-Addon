@@ -113,13 +113,13 @@ public class NewVillagerTrades {
             TradeProvider.getBuilder().profession(profession).level(3).buy().item(BTWItems.curedMeat.itemID, 1).emeraldCost(2, 3).mandatory().addToTradeList();
             TradeProvider.getBuilder().profession(profession).level(3).buy().item(b.itemID, 3).emeraldCost(15, 20).mandatory().addAsLevelUpTrade();
             EntityVillager.removeLevelUpTrade(profession, 4);
-            TradeProvider.getBuilder().profession(profession).level(4).sell().item(Item.beefCooked.itemID, 3).emeraldCost(3, 4).mandatory().addToTradeList();
-            TradeProvider.getBuilder().profession(profession).level(4).sell().item(Item.porkCooked.itemID, 3).emeraldCost(3, 4).mandatory().addToTradeList();
-            TradeProvider.getBuilder().profession(profession).level(4).sell().item(Item.appleGold.itemID, 3).emeraldCost(2, 3).mandatory().addAsLevelUpTrade();
+            TradeProvider.getBuilder().profession(profession).level(4).sell().item(BTWItems.steakDinner.itemID, 1).emeraldCost(3, 4).mandatory().addToTradeList();
+            TradeProvider.getBuilder().profession(profession).level(4).sell().item(BTWItems.porkDinner.itemID, 1).emeraldCost(3, 4).mandatory().addToTradeList();
+            TradeProvider.getBuilder().profession(profession).level(4).sell().item(Item.appleGold.itemID, 1).emeraldCost(2, 3).mandatory().addAsLevelUpTrade();
             EntityVillager.removeLevelUpTrade(profession, 5);
-            TradeProvider.getBuilder().profession(profession).level(5).sell().item(BTWItems.porkDinner.itemID, 4).emeraldCost(1, 2).mandatory().addToTradeList();
-            TradeProvider.getBuilder().profession(profession).level(5).sell().item(BTWItems.steakDinner.itemID, 2).emeraldCost(1, 2).mandatory().addToTradeList();
-            TradeProvider.getBuilder().profession(profession).level(5).sell().item(BTWItems.hamAndEggs.itemID, 7).emeraldCost(2, 3).mandatory().addToTradeList();
+            TradeProvider.getBuilder().profession(profession).level(5).sell().item(BTWItems.heartyStew.itemID, 1).emeraldCost(1, 2).mandatory().addToTradeList();
+            TradeProvider.getBuilder().profession(profession).level(5).sell().item(BTWItems.cookedKebab.itemID, 1).emeraldCost(1, 2).mandatory().addToTradeList();
+            TradeProvider.getBuilder().profession(profession).level(5).sell().item(BTWItems.chickenSoup.itemID, 1).emeraldCost(2, 3).mandatory().addToTradeList();
             TradeProvider.getBuilder().profession(profession).level(5).sell().item(BTWItems.cookedScrambledEggs.itemID, 2).emeraldCost(1, 1).mandatory().addToTradeList();
 
 
