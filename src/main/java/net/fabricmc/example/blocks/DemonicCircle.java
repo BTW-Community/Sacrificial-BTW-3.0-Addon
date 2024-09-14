@@ -1,10 +1,7 @@
 package net.fabricmc.example.blocks;
 
 import btw.item.BTWItems;
-import net.fabricmc.example.entity.DeaconHarmaEntity;
-import net.fabricmc.example.entity.DemonHertraEntity;
-import net.fabricmc.example.entity.DemonMulbrenEntity;
-import net.fabricmc.example.entity.DemonPandaEntity;
+import net.fabricmc.example.entity.*;
 import net.minecraft.src.*;
 
 import java.util.Random;
@@ -98,6 +95,16 @@ public class DemonicCircle extends Block {
 
 			par1World.playSound(par2, par3, par4, "mob.ghast.scream", 2, 1);
 			par1World.spawnParticle("hugeexplosion", par2, par3, par4, 0.0, 0.0, 0.0);
+		}else if (metadata == 5)
+		{
+
+			var demon = new DemonSkelbryEntity(par1World);
+			demon.preInitCreature();
+			demon.setLocationAndAngles(par2, par3 + 5, par4, 0, 0);
+			par1World.spawnEntityInWorld(demon);
+
+			par1World.playSound(par2, par3, par4, "mob.ghast.scream", 2, 1);
+			par1World.spawnParticle("hugeexplosion", par2, par3, par4, 0.0, 0.0, 0.0);
 		}
 		par1World.setBlockMetadataWithNotify(par2, par3, par4, 0);
 
@@ -111,7 +118,8 @@ public class DemonicCircle extends Block {
 		if (heldItem.itemID != Item.porkRaw.itemID &&
 				heldItem.itemID != Item.beefRaw.itemID &&
 				heldItem.itemID != BTWItems.rawMutton.itemID &&
-				heldItem.itemID != BTWItems.rawMysteryMeat.itemID
+				heldItem.itemID != BTWItems.rawMysteryMeat.itemID &&
+				heldItem.itemID != Item.bone.itemID
 		) {
 			return false;
 		}
@@ -134,6 +142,10 @@ public class DemonicCircle extends Block {
 		if (heldItem.itemID == BTWItems.rawMysteryMeat.itemID)
 		{
 			par1World.setBlockMetadataWithNotify(par2, par3, par4, 4);
+		}
+		if (heldItem.itemID == Item.bone.itemID)
+		{
+			par1World.setBlockMetadataWithNotify(par2, par3, par4, 5);
 		}
 
 		--heldItem.stackSize;

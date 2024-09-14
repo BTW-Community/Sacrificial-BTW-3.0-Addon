@@ -17,10 +17,7 @@ import net.fabricmc.example.blocks.DemonicCircle;
 import net.fabricmc.example.blocks.Sacrificial;
 import net.fabricmc.example.entity.*;
 import net.fabricmc.example.items.*;
-import net.fabricmc.example.render.DeaconHarmaRenderer;
-import net.fabricmc.example.render.DemonHertraRenderer;
-import net.fabricmc.example.render.DemonMulbrenRenderer;
-import net.fabricmc.example.render.DemonPandaRenderer;
+import net.fabricmc.example.render.*;
 import net.minecraft.src.*;
 
 import java.util.Dictionary;
@@ -71,10 +68,12 @@ public class ExampleAddon extends BTWAddon {
         EntityList.addMapping(DemonPandaEntity.class, "demonPanda", 667, 1, 100);
         EntityList.addMapping(DemonMulbrenEntity.class, "demonMulbren", 668, 1, 100);
         EntityList.addMapping(DeaconHarmaEntity.class, "deaconHarma", 669, 1, 200);
+        EntityList.addMapping(DemonSkelbryEntity.class, "demonSkelbry", 670, 1, 200);
         RenderManager.addEntityRenderer(DemonHertraEntity.class, new DemonHertraRenderer(new DemonHertraModel(), null));
         RenderManager.addEntityRenderer(DemonPandaEntity.class, new DemonPandaRenderer(new DemonPandaModel(), null));
         RenderManager.addEntityRenderer(DemonMulbrenEntity.class, new DemonMulbrenRenderer(new DemonMulbrenModel(), null));
         RenderManager.addEntityRenderer(DeaconHarmaEntity.class, new DeaconHarmaRenderer(new DeaconHarmaModel(), null));
+        RenderManager.addEntityRenderer(DemonSkelbryEntity.class, new DemonSkelbryRenderer(new DemonSkelbryModel(), null));
 
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialItem, 1), new Object[] {BTWBlocks.looseCobblestone, Block.dragonEgg});
         RecipeManager.addShapelessRecipe(new ItemStack(sacrificialKnife, 1), new Object[] {BTWItems.sharpStone, BTWItems.soulUrn});
@@ -274,13 +273,15 @@ public class ExampleAddon extends BTWAddon {
 
         for(var i = 100; i >= 0; --i)
         {
-            if (world.isBlockOpaqueCube(x1, i, z1) || world.isAirBlock(x1, i, z1))
+            if (!world.isBlockOpaqueCube(x1, i, z1))
             {
                 lastAirBlock = i;
             }
             else
             {
                 world.setBlock(x1, lastAirBlock, z1, sacrificialId + 4);
+
+                return;
             }
         }
     }
@@ -583,7 +584,7 @@ public class ExampleAddon extends BTWAddon {
         if (chest == null)
             return;
 
-        chest.setStorageStack(getLoot(1, rand));
+        chest.setStorageStack(getLoot(0, rand));
     }
 
     private void spawnCastle(World world, int x1, int z1, Random rand)
