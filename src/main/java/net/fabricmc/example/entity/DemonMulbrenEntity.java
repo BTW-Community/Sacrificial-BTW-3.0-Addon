@@ -23,9 +23,11 @@ public class DemonMulbrenEntity extends EntityMob {
 
 	protected void dropFewItems(boolean bKilledByPlayer, int iLootingLevel) {
 		super.dropFewItems(bKilledByPlayer, iLootingLevel);
-		this.dropItem(777, this.rand.nextInt(1, 3));
+		this.dropItem(778, this.rand.nextInt(1, 3));
 		if (this.rand.nextInt(1, 10) == 1)
-			this.dropItem(BTWItems.soulforgedSteelIngot.itemID, 1);
+			this.dropItem(BTWItems.soulforgedSteelIngot.itemID, 3);
+		if (this.rand.nextInt(1, 10) == 1)
+			this.dropItem(BTWItems.diamondIngot.itemID, 6);
 	}
 
 	public void applyEntityAttributes()

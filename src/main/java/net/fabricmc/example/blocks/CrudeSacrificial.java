@@ -89,34 +89,26 @@ public class CrudeSacrificial extends Block {
 				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.plateBreastplate.itemID, 1, 100, 1);
 			if (random == 2)
 				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.corpseEye.itemID, 1, 0, 1);
-		} else if (rand.nextInt(1, 20) == 1) {
+		} else if (rand.nextInt(1, 10) == 1) {
 			var random = rand.nextInt(1, 5);
 
 			if (random == 1)
 				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.diamondIngot.itemID, 1, 0, 3);
-			if (random == 1)
-				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.diamondArmorPlate.itemID, 1, 0, 2);
 			if (random == 2)
-				dropItemsIndividually(par1World, par2, par3, par4, Item.plateDiamond.itemID, 1, 500, 1);
+				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.diamondArmorPlate.itemID, 1, 0, 2);
 			if (random == 3)
-				dropItemsIndividually(par1World, par2, par3, par4, Item.swordIron.itemID, 1, 450, 1);
+				dropItemsIndividually(par1World, par2, par3, par4, Item.plateDiamond.itemID, 1, 400, 1);
 			if (random == 4)
-				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.gimpHelmet.itemID, 1, 200, 1);
+				dropItemsIndividually(par1World, par2, par3, par4, Item.flintAndSteel.itemID, 1, 0, 1);
 
 		} else {
-			var random = rand.nextInt(1, 5);
+			var random = rand.nextInt(1, 3);
 
 			if (random == 1)
 				dropItemsIndividually(par1World, par2, par3, par4, Item.ingotIron.itemID, 1, 0, 1);
 
 			if (random == 2)
 				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.curedMeat.itemID, 2, 0, 1);
-
-			if (random == 3)
-				dropItemsIndividually(par1World, par2, par3, par4, BTWItems.boneClub.itemID, 1, 0, 1);
-
-			if (random == 4)
-				dropItemsIndividually(par1World, par2, par3, par4, Item.flintAndSteel.itemID, 1, 0, 1);
 		}
 	}
 

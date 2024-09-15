@@ -26,9 +26,9 @@ public class NewVillagerTrades {
             EntityVillager.removeLevelUpTrade(profession, 3);
             TradeProvider.getBuilder().profession(profession).level(3).sell().item(BTWItems.tastySandwich.itemID, 3).emeraldCost(1, 1).mandatory().addToTradeList();
             TradeProvider.getBuilder().profession(profession).level(3).sell().item(BTWItems.chickenFeed.itemID, 4).emeraldCost(1, 1).mandatory().addToTradeList();
-            TradeProvider.getBuilder().profession(profession).level(3).sell().item(BTWItems.breadDough.itemID, 3).emeraldCost(1, 1).mandatory().addToTradeList();
+            TradeProvider.getBuilder().profession(profession).level(3).sell().item(BTWItems.hemp.itemID, 3).emeraldCost(1, 1).mandatory().addToTradeList();
             TradeProvider.getBuilder().profession(profession).level(3).sell().item(BTWItems.boiledPotato.itemID, 6).emeraldCost(1, 1).mandatory().addToTradeList();
-            TradeProvider.getBuilder().profession(profession).level(3).sell().item(BTWItems.carrotSeeds.itemID, 2).emeraldCost(1, 1).mandatory().addAsLevelUpTrade();
+            TradeProvider.getBuilder().profession(profession).level(3).sell().item(BTWItems.wheatSeeds.itemID, 2).emeraldCost(1, 1).mandatory().addAsLevelUpTrade();
             EntityVillager.removeLevelUpTrade(profession, 4);
             TradeProvider.getBuilder().profession(profession).level(4).sell().item(BTWItems.boneFishHook.itemID, 1).emeraldCost(1, 1).mandatory().addToTradeList();
             TradeProvider.getBuilder().profession(profession).level(4).sell().item(BTWItems.baitedFishingRod.itemID, 1).emeraldCost(1, 1).mandatory().weight(0.25f).addToTradeList();

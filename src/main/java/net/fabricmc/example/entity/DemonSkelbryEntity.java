@@ -24,7 +24,10 @@ public class DemonSkelbryEntity extends EntityMob {
 		this.dropItem(Item.skull.itemID, 3);
 		this.dropItem(777, 3);
 		this.dropItem(778, 3);
-		this.dropItem(BTWItems.soulforgedSteelIngot.itemID, rand.nextInt(1, 3));
+		if (this.rand.nextInt(1, 10) == 1)
+			this.dropItem(BTWItems.soulforgedSteelIngot.itemID, 3);
+		if (this.rand.nextInt(1, 10) == 1)
+			this.dropItem(BTWItems.diamondIngot.itemID, 6);
 		this.dropItem(BTWItems.padding.itemID, 2);
 		this.dropItem(BTWItems.leatherStrap.itemID, 4);
 

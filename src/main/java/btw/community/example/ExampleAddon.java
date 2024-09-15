@@ -10,6 +10,7 @@ import btw.entity.mob.villager.FarmerVillagerEntity;
 import btw.entity.mob.villager.LibrarianVillagerEntity;
 import btw.entity.mob.villager.PriestVillagerEntity;
 import btw.item.BTWItems;
+import btw.item.util.ItemUtils;
 import btw.world.biome.BiomeDecoratorBase;
 import net.fabricmc.example.blocks.BloodBush;
 import net.fabricmc.example.blocks.CrudeSacrificial;
@@ -102,6 +103,7 @@ public class ExampleAddon extends BTWAddon {
 
     @Override
     public void decorateWorld(BiomeDecoratorBase decorator, World world, Random rand, int x, int y, BiomeGenBase biome) {
+
         ++x;
         ++y;
         //if (!world.doChunksNearChunkExist(x, 60, y, 1))
@@ -169,8 +171,10 @@ public class ExampleAddon extends BTWAddon {
     {
         var height = world.getChunkHeightMapMinimum(x1, z1) + 1;
 
-        world.setBlock(x1 + 1, 101, z1 + 1, BTWBlocks.soulforgedSteelBlock.blockID);
+        world.setBlock(x1 , 101, z1, BTWBlocks.soulforgedSteelBlock.blockID);
 
+        var giftStack = new ItemStack(BTWItems.diamondIngot, 4);
+        ItemUtils.ejectStackWithRandomOffset(world, x1 - 7, 101, z1 - 7, giftStack);
 
         int y;
         for (y = 0; y <= 100; ++y)
@@ -4781,8 +4785,6 @@ public class ExampleAddon extends BTWAddon {
         spawner4.getSpawnerLogic().setMobID("Skeleton");
         var spawner3 = (TileEntityMobSpawner)world.getBlockTileEntity(x1+4, height+12, z1+4);
         spawner3.getSpawnerLogic().setMobID("Skeleton");
-        var spawner1 = (TileEntityMobSpawner)world.getBlockTileEntity(x1+8, height+-4, z1+3);
-        spawner1.getSpawnerLogic().setMobID("Zombie");
         var spawner2 = (TileEntityMobSpawner)world.getBlockTileEntity(x1+4, height+8, z1+4);
         spawner2.getSpawnerLogic().setMobID("Skeleton");
     }
@@ -5921,19 +5923,11 @@ public class ExampleAddon extends BTWAddon {
 
         if (type == 0)
         {
-            var randomLoot = rand.nextInt(1, 7);
+            var randomLoot = rand.nextInt(1, 3);
 
             if (randomLoot == 1)
-                loot = new ItemStack(BTWItems.diamondArmorPlate, 2);
-            if (randomLoot == 2)
-                loot = new ItemStack(Item.stick, 3);
-            if (randomLoot == 3)
                 loot = new ItemStack(Item.bone, 2);
-            if (randomLoot == 4)
-                loot = new ItemStack(Item.beefRaw, 2);
-            if (randomLoot == 5)
-                loot = new ItemStack(Item.arrow, 8);
-            if (randomLoot == 6)
+            if (randomLoot == 2)
                 loot = new ItemStack(Item.book, 2);
         }
         if (type == 1)
@@ -5962,11 +5956,11 @@ public class ExampleAddon extends BTWAddon {
             if (randomLoot == 2)
                 loot = new ItemStack(Item.swordIron);
             if (randomLoot == 3)
-                loot = new ItemStack(Item.shovelIron, 1);
+                loot = new ItemStack(Item.shovelDiamond, 1);
             if (randomLoot == 4)
-                loot = new ItemStack(Item.pickaxeIron, 1);
+                loot = new ItemStack(Item.pickaxeDiamond, 1);
             if (randomLoot == 5)
-                loot = new ItemStack(Item.shovelStone, 1);
+                loot = new ItemStack(Item.swordDiamond, 1);
             if (randomLoot == 6)
                 loot = new ItemStack(Item.boat, 1);
             if (randomLoot == 7)
@@ -6001,24 +5995,16 @@ public class ExampleAddon extends BTWAddon {
         }
         if (type == 4)
         {
-            var randomLoot = rand.nextInt(1, 7);
+            var randomLoot = rand.nextInt(1, 5);
 
             if (randomLoot == 1)
                 loot = new ItemStack(BTWItems.diamondArmorPlate, 2);
             if (randomLoot == 2)
-                loot = new ItemStack(BTWItems.steakDinner, 2);
-            if (randomLoot == 3)
                 loot = new ItemStack(Item.bucketMilk, 1);
-            if (randomLoot == 4)
-                loot = new ItemStack(Item.beefRaw, 5);
-            if (randomLoot == 5)
+            if (randomLoot == 3)
                 loot = new ItemStack(Item.glassBottle, 4);
-            if (randomLoot == 6)
+            if (randomLoot == 4)
                 loot = new ItemStack(Item.appleGold, 1);
-            if (randomLoot == 7)
-                loot = new ItemStack(BTWItems.diamondIngot, 2);
-            if (randomLoot == 8)
-                loot = new ItemStack(BTWItems.clayPile, 32);
         }
 
         if (type == 5)
